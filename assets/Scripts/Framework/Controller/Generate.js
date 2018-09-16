@@ -1,4 +1,4 @@
-var controller = cc.Class({
+var generate = cc.Class({
     ctor(Prefab, number, name, address) {
         this.Prefab = Prefab;
         this.number = number;
@@ -25,4 +25,4 @@ var controller = cc.Class({
 
 })
 
-module.exports = controller
+module.exports = generate

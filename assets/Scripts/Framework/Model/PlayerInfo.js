@@ -8,7 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var model = cc.Class({
+var playerInfo = cc.Class({
     extends: cc.Component,
 
     properties: {
@@ -46,4 +46,4 @@ var model = cc.Class({
     // update (dt) {},
 });
 
-module.exports = model
+module.exports = playerInfo
