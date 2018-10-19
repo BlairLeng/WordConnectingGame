@@ -1,4 +1,4 @@
 module.exports = {
-pen : " 钢笔 ",
-pencil : " 铅笔 ",
-}
+    pen: " 钢笔 ",
+    pencil: " 铅笔 ",
+};

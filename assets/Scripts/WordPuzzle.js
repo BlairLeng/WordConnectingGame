@@ -8,11 +8,11 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var wordlist = ["is","sit","it","its"];
+var wordlist = ["is", "sit", "it", "its"];
 //example for testing
 
-var dict = new Object; 
-var address = new Object; 
+var dict = new Object;
+var address = new Object;
 //the dictionary to return the final index address
 //for each letter
 
@@ -22,19 +22,19 @@ var BoardWid = 13;
 
 WordPuzzleMaker(wordlist);
 
-function WordPuzzleMaker(wl){
+function WordPuzzleMaker(wl) {
     //serve as a play function
     var board;
     var wordl = wl;
     var wd;
     var i;
 
-    board = CreateBoard(BoardLen,BoardWid);
+    board = CreateBoard(BoardLen, BoardWid);
     //console.log(board);
-    for(i = 0;i<wordl.length;i++){
+    for (i = 0; i < wordl.length; i++) {
         wd = wordl[i];
         //console.log(wd);
-        board = PlaceWord(board,wd);
+        board = PlaceWord(board, wd);
     }
     //console.log(address);
     //console.log(board);
@@ -42,8 +42,7 @@ function WordPuzzleMaker(wl){
 }
 
 
-
-function CreateBoard(BoardLenInd,BoardWidInd){
+function CreateBoard(BoardLenInd, BoardWidInd) {
     //创建一个board
 
 
@@ -54,12 +53,12 @@ function CreateBoard(BoardLenInd,BoardWidInd){
 
     ret = new Array(BoardLenInd);
 
-    for(i = 0;i<BoardLenInd;i++){
-        ret[i] = new Array(BoardWidInd);    
+    for (i = 0; i < BoardLenInd; i++) {
+        ret[i] = new Array(BoardWidInd);
     }
 
-    for(a = 0;a<ret.length;a++){
-        for(b = 0;b<ret[a].length;b++){
+    for (a = 0; a < ret.length; a++) {
+        for (b = 0; b < ret[a].length; b++) {
             ret[a][b] = 0;
         }
     }
@@ -68,16 +67,15 @@ function CreateBoard(BoardLenInd,BoardWidInd){
 }
 
 
-
-function AddressInsert(c,i,j){
+function AddressInsert(c, i, j) {
     //把已经放置完成的letter的坐标记录下来，存进名为address的dictionary里
 
-    if(c in address){
-        address[c] = address[c].concat([[i,j]]);
-       
+    if (c in address) {
+        address[c] = address[c].concat([[i, j]]);
+
     }
-    else{
-        address[c] = [[i,j]];
+    else {
+        address[c] = [[i, j]];
 
     }
 
@@ -85,8 +83,7 @@ function AddressInsert(c,i,j){
 }
 
 
-
-function PlaceWord(b,w){
+function PlaceWord(b, w) {
     //放置Word的function
     //console.log("in placeword");
     var word = w;
@@ -95,12 +92,12 @@ function PlaceWord(b,w){
 
     var sp;
 
-    sp = GetSp(bd,word);
+    sp = GetSp(bd, word);
     //get the start position
     //console.log(sp);
     //console.log(word);
-    if(sp[0]==-1){
-        
+    if (sp[0] == -1) {
+
         return bd;
 
     }
@@ -114,59 +111,59 @@ function PlaceWord(b,w){
     //console.log(sp);
 
 
-    if(sp[2] == 0){
+    if (sp[2] == 0) {
         //console.log("?");
 
         //放左边
         var i;
-        for(i=0;i<word.length;i++){
+        for (i = 0; i < word.length; i++) {
             //console.log("in for loop");
-            if(i==0){
+            if (i == 0) {
 
-                bd[x][y-1] = 2;
+                bd[x][y - 1] = 2;
             }
-            if(i==word.length-1){
-                bd[x][y+i+1] = 2;
+            if (i == word.length - 1) {
+                bd[x][y + i + 1] = 2;
             }
             //if(bd[x-1][y+i]!=0){
-                //每个格子上面的格子
-                //bd[x-1][y+i]=3;
+            //每个格子上面的格子
+            //bd[x-1][y+i]=3;
             //}
             //if(bd[x+1][y+i]!=0){
-                //每个格子下面的格子
-                //bd[x+1][y+i]=3;
+            //每个格子下面的格子
+            //bd[x+1][y+i]=3;
             //}
             //console.log("1");
-            bd[x][y+i] = word[i];
-            AddressInsert(word[i],x,y+i);
+            bd[x][y + i] = word[i];
+            AddressInsert(word[i], x, y + i);
 
 
         }
 
     }
-    else if(sp[2]==1){
+    else if (sp[2] == 1) {
         //放下面
         var j;
         //console.log("kai shi fang");
         //console.log(word);
 
-        for(j=0;j<word.length;j++){
-            if(j==0){
-                bd[x-1][y] = 1;
+        for (j = 0; j < word.length; j++) {
+            if (j == 0) {
+                bd[x - 1][y] = 1;
             }
-            if(j==word.length-1){
-                bd[x+j+1][y] = 1;
+            if (j == word.length - 1) {
+                bd[x + j + 1][y] = 1;
             }
             //if(bd[x+i][y-1]!=0){
-                //每个格子上面的格子
-                //bd[x+i][y]=3;
+            //每个格子上面的格子
+            //bd[x+i][y]=3;
             //}
             //if(bd[x+i][y+1]!=0){
-                //每个格子下面的格子
-                //bd[x+i][y+1]=3;
+            //每个格子下面的格子
+            //bd[x+i][y+1]=3;
             //}
-            bd[x+j][y] = word[j];
-            AddressInsert(word[j],x+j,y);
+            bd[x + j][y] = word[j];
+            AddressInsert(word[j], x + j, y);
 
 
         }
@@ -177,7 +174,7 @@ function PlaceWord(b,w){
 
 }
 
-function GetSp(b,w){
+function GetSp(b, w) {
     //return 每一个Word将为摆放位置的starting position
     //[x,y,f]
     //x,y即为坐标，f表示着 这个Word 将会是横着放 还是竖着放
@@ -186,31 +183,27 @@ function GetSp(b,w){
     var board;
     var word = w;
     var i;
-    
+
     var key;
     var ind;
     var addlen;
     board = b;
 
 
-    
-
-   
-
-    if(board[6][6] == 0){
-        return [6,6,0];
+    if (board[6][6] == 0) {
+        return [6, 6, 0];
         //0 表示 放左边放
     }
 
     addlen = Object.keys(address).length;
     console.log(address);
 
-    for(i = 0;i<addlen;i++){
+    for (i = 0; i < addlen; i++) {
         var key;
         //console.log("what is the key for now");
         key = Object.keys(address)[i];
         console.log(key);
-        if(word.indexOf(key)!= -1){
+        if (word.indexOf(key) != -1) {
             var i;
             var fl;
             var bl;
@@ -218,12 +211,11 @@ function GetSp(b,w){
 
             i = word.indexOf(key);
             fl = i;
-            bl = word.length-1-i;
+            bl = word.length - 1 - i;
             var j;
-            
-          
 
-            for(j = 0; j<address[key].length;j++){
+
+            for (j = 0; j < address[key].length; j++) {
                 var ind;
 
                 var ind = address[key][j];
@@ -236,14 +228,14 @@ function GetSp(b,w){
                 //console.log(x);
                 //console.log(y);
                 //console.log("OK?");
-                if(CheckAvlH(x,y,fl,bl,board)){
-                    return [x,y-fl,0];
+                if (CheckAvlH(x, y, fl, bl, board)) {
+                    return [x, y - fl, 0];
                     //左右放
 
 
                 }
-                else if(CheckAvlV(x,y,fl,bl,board)){
-                    return [x-fl,y,1];
+                else if (CheckAvlV(x, y, fl, bl, board)) {
+                    return [x - fl, y, 1];
                     //上下放
 
                 }
@@ -251,17 +243,16 @@ function GetSp(b,w){
             }
 
 
-
         }
 
     }
 
-    return [-1,-1,-1];
+    return [-1, -1, -1];
 }
 
 
-function CheckAvlH(x,y,f,b,bd){
-    
+function CheckAvlH(x, y, f, b, bd) {
+
     var fl = f;
     var bl = b;
     var board = bd;
@@ -272,36 +263,36 @@ function CheckAvlH(x,y,f,b,bd){
     var i;
     var j;
 
-    if(((x-fl)<0) && ((x+bl)>12)){
+    if (((x - fl) < 0) && ((x + bl) > 12)) {
         return false;
     }
-    if(((y-fl)<0) && ((y+bl)>12)){
+    if (((y - fl) < 0) && ((y + bl) > 12)) {
         return false;
     }
 
 
-    for(i = 1;i<=fl;i++){
+    for (i = 1; i <= fl; i++) {
         //if(board[x][y-i]==2){
         //    return false;
         //}
         //else if(board[x][y-i]==3){
         //    return false;
         //}
-        if(board[x][y-i]!=0){
+        if (board[x][y - i] != 0) {
             return false;
 
         }
 
     }
 
-    for(j = 1;j<=bl;j++){
+    for (j = 1; j <= bl; j++) {
         //if(board[x][y+j]==2){
         //    return false;
         //}
         //else if(board[x][y+j]==3){
         //    return false;
         //}
-        if(board[x][y+i]!=0){
+        if (board[x][y + i] != 0) {
             return false;
 
         }
@@ -312,11 +303,11 @@ function CheckAvlH(x,y,f,b,bd){
 
 }
 
-function CheckAvlV(x,y,f,b,bd){
-  
+function CheckAvlV(x, y, f, b, bd) {
+
     var fl = f;
     var bl = b;
-    var board = bd; 
+    var board = bd;
 
     var x = x;
     var y = y;
@@ -324,26 +315,26 @@ function CheckAvlV(x,y,f,b,bd){
     var i;
     var j;
 
-    for(i = 1;i<=fl;i++){
+    for (i = 1; i <= fl; i++) {
         //if(board[x-i][y]==1){
         //    return false;
         //}
         //else if(board[x-i][y]==3){
         //    return false;
         //}
-        if(board[x-i][y]!=0){
+        if (board[x - i][y] != 0) {
             return false;
         }
     }
 
-    for(j = 1;j<=bl;j++){
+    for (j = 1; j <= bl; j++) {
         //if(board[x+j][y]==1){
         //    return false;
         //}
         //else if(board[x+j][y]==3){
         //    return false;
         //}
-        if(board[x+i][y]!=0){
+        if (board[x + i][y] != 0) {
             return false;
         }
     }
@@ -413,19 +404,6 @@ function FindMostFreWord(w){
 }
 
 */
-
-
-
- 
-
-
-
-
-
-
-
-    
-
 
 
 //var boardl = [CreateBoard(BoardLen,BoardWid),CreateBoard(BoardLen,BoardWid),CreateBoard(BoardLen,BoardWid),CreateBoard(BoardLen,BoardWid),CreateBoard(BoardLen,BoardWid)];
@@ -598,9 +576,10 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {},
+    onLoad() {
+    },
 
-    start () {
+    start() {
 
     },
 

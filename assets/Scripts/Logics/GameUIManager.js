@@ -13,7 +13,7 @@ cc.Class({
 
     properties: {
         _setting: cc.Node,
-        _Canvas : cc.Node,
+        _Canvas: cc.Node,
 
         SettingPanel: {
             default: null,
@@ -23,9 +23,9 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad:function () {
+    onLoad: function () {
         cc.game.addPersistRootNode(this.Node)
-        this._setting= cc.find("Canvas/setting")
+        this._setting = cc.find("Canvas/setting")
         this._setting.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._setting)
     },
 
@@ -35,11 +35,11 @@ cc.Class({
 
     enterSettingPanel: function () {
         this._Canvas = cc.find("Canvas");
-        var settinggen = new controller(this.SettingPanel,1,"",this._Canvas);
+        var settinggen = new controller(this.SettingPanel, 1, "", this._Canvas);
         var setting = settinggen.GeneratePics();
     },
 
-    start () {
+    start() {
 
     },
 
