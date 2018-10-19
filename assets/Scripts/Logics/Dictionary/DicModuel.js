@@ -2,5 +2,6 @@ module.exports = {
     pen: "pen",
     my: "my",
     an: "an",
-    ac: "ac"
+    ac: "ac",
+    ab: "ab"
 };
