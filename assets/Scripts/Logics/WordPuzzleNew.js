@@ -8,12 +8,17 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var wordlist = ["pencil","pen","apple","hi"];//word list for testing purpose
+//var wordlist = ["pencil","pen","apple","hi"];//word list for testing purpose
 var address = new Object; // the dictionary that store each letter's index
 var rest = new Array(); // the array to store any words that CAN NOT be in the puzzle; we will place them addtionally
 var board; //board variable
 var BoardLen = 13;
 var BoardWid = 13;
+var wordAddress = new Array();
+var GeneratedWrod = require("../word_generation.js")
+var w = new GeneratedWrod();
+var wordlist = w.onLoad();
+console.log(wordlist);
 
 
 cc.Class({
@@ -44,7 +49,7 @@ cc.Class({
         var i;//index variable
         for(i = 0;i<wordlist.length;i++){ //for loop to go through each word and place the word onto the board
             word = wordlist[i];
-            this.PlaceWord(board,word); 
+            this.PlaceWord(board,word,i); 
         }
 
         var j;//for loop index variable
@@ -55,13 +60,15 @@ cc.Class({
 
     },
 
-    AddressInsert: function(letter,indx,indy){
+    AddressInsert: function(letter,indx,indy,n){
         //This function insert the index for each letter that has been placed on the 2D board 
         //into the Address dictionary that we will return in the end
         //INPUT: each char,index i, index j
+        var word = wordlist[n];
 
-        if(letter in address) //if this particular char has already in dictionary
+        if(word in address) //if this particular char has already in dictionary
         {
+            /*
             var i;//for loop index variable
             for(i=0;i<address[letter].length;i++) //to avoid insert same index again
             {
@@ -71,13 +78,15 @@ cc.Class({
                     return;
                 }
             }
-            address[letter] = address[letter].concat([[indx,indy]]); //add the index into the existing list
+            */
+            address[word] = address[word].concat([[indx,indy]]); //add the index into the existing list
         }
         else
         {
-            address[letter] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
+            address[word] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
         }
     },
+
 
     CreateBoard: function(){
         var i;//for loop index variable
@@ -112,7 +121,7 @@ cc.Class({
     },
 
 
-    PlaceWord: function(board,word){
+    PlaceWord: function(board,word,n){
         //this function will get the starting postion(index) for the word
         //It will return [index i,index j, flag variable]
         //The flag variable serves as a message to tell how to place the word (horizontal or vertical)
@@ -184,7 +193,7 @@ cc.Class({
                 }
 
                 board[x][y+i] = word[i]; //place the letter onto the board
-                this.AddressInsert(word[i],x,y+i); //insert the index information into the Address dictionary 
+                this.AddressInsert(word[i],x,y+i,n); //insert the index information into the Address dictionary 
                                               //[letter,index i,index j]
             }
         }
@@ -231,7 +240,7 @@ cc.Class({
                 }
 
                 board[x+j][y] = word[j]; //place the letter onto the board
-                this.AddressInsert(word[j],x+j,y); //insert the index information into the Address dictionary 
+                this.AddressInsert(word[j],x+j,y,n); //insert the index information into the Address dictionary 
                                                    //[letter,index i,index j]
 
             }

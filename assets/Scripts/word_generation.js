@@ -103,8 +103,8 @@ module.exports = cc.Class({
 
         }
         // // edit
-        // return result;
-        cc.log("valid words: " + result)
+        return result;
+        //cc.log("valid words: " + result)
 
     },
 
