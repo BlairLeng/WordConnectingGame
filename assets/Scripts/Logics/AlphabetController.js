@@ -35,8 +35,9 @@ cc.Class({
     },
 
     onLoad: function () {
+        console.log("这个词", words);
         this.init();
-        console.log(words)
+
     },
 
     init: function () {
@@ -44,17 +45,40 @@ cc.Class({
     },
 
     generate: function () {
-        for (var j = 0; j < testword.length; j++) {
-            for (var i = 0; i < testword[j].length; i++) {
-                var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[testword[j][i]]]);
-                NewPrefab.setPosition(cc.v2(i * 100 - 100, -150 - j*100)); // 位置
-                NewPrefab.setScale(0.5,0.5); // 位置
-                NewPrefab.parent = this.AlphabetLayout;
-                this.addTouchEvent(NewPrefab);
-                // NewPrefab.isCheck = false;
-                NewPrefab.name = `${testword[j][i]}`;
-                this.SpawnsObject.push(NewPrefab);
-                //console.log(NewPrefab.name);
+        var longestWord = words[0];
+        for (var i = 0; i < longestWord.length; i++) {
+            var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[longestWord[i]]]);
+            NewPrefab.setScale(1, 1); // 大小
+            NewPrefab.parent = this.AlphabetLayout;
+            NewPrefab.name = `${longestWord[i]}`;
+            this.addTouchEvent(NewPrefab);
+            this.SpawnsObject.push(NewPrefab);
+
+            if (longestWord.length === 3) {
+                if      (i === 0) NewPrefab.setPosition(cc.v2(-100, -400)); // 位置
+                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -300)); // 位置
+                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
+            }
+            if (longestWord.length === 4) {
+                if      (i === 0) NewPrefab.setPosition(cc.v2(0, -250));
+                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -450));
+                else if (i === 2) NewPrefab.setPosition(cc.v2(-100, -350)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(100, -350)); // 位置
+            }
+            if (longestWord.length === 5) {
+                if      (i === 0) NewPrefab.setPosition(cc.v2(0, -300));
+                else if (i === 1) NewPrefab.setPosition(cc.v2(-100, -500));
+                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -500)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(-200, -400)); // 位置
+                else if (i === 4) NewPrefab.setPosition(cc.v2(200, -400)); // 位置
+            }
+            if (longestWord.length === 6) {
+                if      (i === 0) NewPrefab.setPosition(cc.v2(-100, -100));
+                else if (i === 1) NewPrefab.setPosition(cc.v2(100, -100));
+                else if (i === 2) NewPrefab.setPosition(cc.v2(-100, -400)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
+                else if (i === 4) NewPrefab.setPosition(cc.v2(-200, -250)); // 位置
+                else if (i === 5) NewPrefab.setPosition(cc.v2(200, -250)); // 位置
             }
         }
     },
@@ -89,7 +113,7 @@ cc.Class({
             var touchLoc = touches[0].getLocation();
             this.checkAlphabet(this.SpawnsObject, touchLoc);
             this.testWord(this.alphabetsTouched);
-            console.log("这里",this.alphabetsTouched);
+            console.log("这里", this.alphabetsTouched);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
             console.log("屏幕接触取消");
         }, this);
@@ -121,10 +145,10 @@ cc.Class({
         for (var i = 0; i < wordArr.length; i++) {
             wordTouched += wordArr[i].name
         }
-        if (testword.indexOf(wordTouched)!== -1
+        if (words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
-            console.log("yes")
+            console.log("hahhayes")
         }
         console.log(wordTouched);
         console.log(this.wordHasFound);
