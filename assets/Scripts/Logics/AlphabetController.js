@@ -47,6 +47,8 @@ module.exports = cc.Class({
 
         line: [],
 
+        linebyname: []
+
     },
 
     onLoad: function () {
@@ -65,7 +67,7 @@ module.exports = cc.Class({
             var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[longestWord[i]]]);
             NewPrefab.setScale(1, 1); // 大小
             NewPrefab.parent = this.AlphabetLayout;
-            NewPrefab.name = `${longestWord[i]}`;
+            NewPrefab.name = `${longestWord[i] + i}`;
             // this.addTouchEvent(NewPrefab);
             this.SpawnsObject.push(NewPrefab);
 
@@ -81,11 +83,11 @@ module.exports = cc.Class({
                 else if (i === 3) NewPrefab.setPosition(cc.v2(100, -350)); // 位置
             }
             if (longestWord.length === 5) {
-                if (i === 0) NewPrefab.setPosition(cc.v2(0, -300));
-                else if (i === 1) NewPrefab.setPosition(cc.v2(-100, -500));
-                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -500)); // 位置
-                else if (i === 3) NewPrefab.setPosition(cc.v2(-200, -400)); // 位置
-                else if (i === 4) NewPrefab.setPosition(cc.v2(200, -400)); // 位置
+                if (i === 0) NewPrefab.setPosition(cc.v2(0, -200));
+                else if (i === 1) NewPrefab.setPosition(cc.v2(-100, -400));
+                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(-200, -300)); // 位置
+                else if (i === 4) NewPrefab.setPosition(cc.v2(200, -300)); // 位置
             }
             if (longestWord.length === 6) {
                 if (i === 0) NewPrefab.setPosition(cc.v2(-100, -100));
@@ -161,7 +163,7 @@ module.exports = cc.Class({
     testWord: function (wordArr) {
         var wordTouched = "";
         for (var i = 0; i < wordArr.length; i++) {
-            wordTouched += wordArr[i].name
+            wordTouched += wordArr[i].name[0]
         }
         if (words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
@@ -181,10 +183,10 @@ module.exports = cc.Class({
         for (var i = 0; i < longestWord.length; i++) {
             var fab = cc.instantiate(this.test[0]);
             fab.parent = this.testLayout;
-            fab.name = `${longestWord[i]}`;
+            fab.name = `${longestWord[i] + i}`;
             fab.setScale(1, 1);
-            fab.setPosition(LocationArr[longestWord[i]]);
-            this.lineEventListener(LocationArr[longestWord[i]], fab);
+            fab.setPosition(LocationArr[fab.name]);
+            this.lineEventListener(LocationArr[fab.name], fab);
             this.line.push(fab);
         }
     },
@@ -206,6 +208,11 @@ module.exports = cc.Class({
             var checkedAlphabet = this.checkAlphabet(this.SpawnsObject, touchLoc);
             this.pushTouchedAlphabet(checkedAlphabet);
             this.updateLine(this.alphabetsTouched, this.AlphabetLocation, worldTouchLoc);
+            // for (var i = this.line.length - 1; i >= 0; i--) {
+            // 	console.log(this.line[i].name,this.line[i].position)
+            // 	console.log(this.SpawnsObject[i].name,this.SpawnsObject[i].position)
+            // }
+            
             console.log("正在与屏幕接触");
         }, this);
 
@@ -214,7 +221,7 @@ module.exports = cc.Class({
             var touchLoc = touches[0].getLocation();
             this.checkAlphabet(this.SpawnsObject, touchLoc);
             this.testWord(this.alphabetsTouched);
-            this.updateLine(this.alphabetsTouched, this.AlphabetLocation, null);
+            // this.updateLine(this.alphabetsTouched, this.AlphabetLocation, null);
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
             console.log("屏幕接触取消");
@@ -236,26 +243,31 @@ module.exports = cc.Class({
 
     updateLine: function (LinePointArr, PointLocationArr, touchPoint) {
         if (LinePointArr.length > 1) {
-            for (var i = 0; i < LinePointArr.length; i++) {
-                if (i === LinePointArr.length - 1) {
-                    break;
-                }
+            for (var i = 0; i < LinePointArr.length - 1; i++) {
+                // if (i === LinePointArr.length - 1) {
+                //     break;
+                // }
+                console.log(i,this.line[i].name,this.line[i].position)
                 var pointIndex1 = LinePointArr[i + 1].name;
                 var pointIndex2 = LinePointArr[i].name;
-                this.drawLine(PointLocationArr[pointIndex2], PointLocationArr[pointIndex1], this.line[i]);
+                this.drawLine(PointLocationArr[pointIndex2], PointLocationArr[pointIndex1], this.line[i]);//this.linebyname[pointIndex2])//
             }
         }
         if (touchPoint != null) {
             var lastPointIndex = LinePointArr[LinePointArr.length - 1].name;
             var lastPoint = PointLocationArr[lastPointIndex];
-            this.drawLine(lastPoint, touchPoint, this.line[LinePointArr.length - 1]);
+            this.drawLine(lastPoint, touchPoint, this.line[LinePointArr.length - 1]);//this.linebyname[lastPointIndex])
         }
     },
 
     clearLine: function (LinePointArr) {
         for (var i = 0; i < LinePointArr.length; i++) {
+            // console.log("复原后",LinePointArr[i].position);
+            // console.log("复原前",this.line[i]);
+            // console.log("字母位置",this.SpawnsObject[i]);
             LinePointArr[i].rotation = 0;
             LinePointArr[i].width = 10;
+            LinePointArr[i].height = 10
         }
 
     }
