@@ -30,5 +30,11 @@ module.exports = {
         "x": 23,
         "y": 24,
         "z": 25
-    }
+    },
+
+    generatedWords: [],
+    // 每具游戏生成的单词
+
+    touchedWord: ""
+    // 触摸瞬间点击的单词
 };

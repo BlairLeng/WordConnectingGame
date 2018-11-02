@@ -11,6 +11,7 @@ var commonValue = require("/Common.js");
 var generatedWord = require("../word_generation.js");
 var word = new generatedWord();
 var words = word.onLoad();
+commonValue.generatedWords = words; // 给common里generatedWords赋值
 // var words = ["pencil", "pen"];
 module.exports = cc.Class({
 
@@ -18,41 +19,49 @@ module.exports = cc.Class({
 
     properties: {
         AlphabetLayout: cc.Node,
+            // 生成字母的母节点
 
         Alphabet: {
+            // 生成字母的prefab
             default: [],
             type: cc.Prefab
         },
 
         alphabetsTouched: [],
+            // 触目过程中存储字母
 
-        initWord: [],
+        //initWord: [],
+            //
 
         wordHasFound: [],
+            // 触目过程中的单词
 
         SpawnsObject: [],
+            // 生成字母存储
 
         AlphabetLocation: {
-            //存储生成字母的坐标 键值对
+            // 存储生成字母的坐标 键值对
             default: [],
             type: cc.Node
         },
 
         test: {
+            // 生成线prefab
             type: cc.Prefab,
             default: []
         },
 
         testLayout: cc.Node,
+            // 生成线的母节点
 
         line: [],
+            // 触摸过程经过的线
 
-        linebyname: []
 
     },
 
     onLoad: function () {
-        console.log("这个词", words);
+        console.log("这个生成的随机词", words);
         this.init();
     },
 
@@ -168,16 +177,19 @@ module.exports = cc.Class({
         if (words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
-            console.log("恭喜你答对了")
+            console.log("恭喜你答对了");
+            commonValue.touchedWord = wordTouched;
+            return true;
         }
         else {
-            console.log("你是傻了吧")
+            console.log("你是傻了吧");
+            return false;
         }
         console.log(wordTouched);
         console.log(this.wordHasFound);
     },
 
-    // new
+    // new line
     generateLine: function (LocationArr) {
         var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {

@@ -15,10 +15,18 @@ var board; //board variable
 var BoardLen = 13;
 var BoardWid = 13;
 var wordAddress = new Array();
-var GeneratedWrod = require("../word_generation.js")
+var GeneratedWrod = require("../word_generation.js");
 var w = new GeneratedWrod();
 var wordlist = w.onLoad();
 console.log(wordlist);
+
+// var a = require("/Common.js");
+// var aa = new a();
+// var a = require("/AlphabetController.js");
+
+var commonValue = require("/Common.js");
+var generatedWords = commonValue.generatedWords;
+var touchedWord = commonValue.touchedWord;
 
 
 cc.Class({
@@ -29,6 +37,9 @@ cc.Class({
     },
         
 //example for testing
+    onLoad () {
+        // console.log("我出个", words)
+    },
 
     start () {
         board = this.CreateBoard();
