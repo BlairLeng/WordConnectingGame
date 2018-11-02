@@ -8,7 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var dic = require("dic/dic3.js");
+var dic = require("dic/level.js");
 module.exports = cc.Class({
     extends: cc.Component,
 

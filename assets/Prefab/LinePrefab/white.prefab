@@ -17,7 +17,7 @@
     "_parent": null,
     "_children": [],
     "_active": true,
-    "_level": 2,
+    "_level": 1,
     "_components": [
       {
         "__id__": 2
@@ -67,7 +67,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 80,
+    "_localZOrder": 27,
     "groupIndex": 0,
     "_id": ""
   },
@@ -97,7 +97,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "46yNzE92NAmIxu/l7rmWiY"
+    "_id": "8eyAi5uU9LorGU8e1kcav7"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -105,7 +105,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a0fba978-1d01-49c1-93ea-90734d22ae4b"
     },
     "fileId": "60pqFSLi1LU6FgF2z1d9CV",
     "sync": false
