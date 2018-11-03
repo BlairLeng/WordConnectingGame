@@ -139,11 +139,12 @@ module.exports = cc.Class({
         for (var i = 0; i < wordArr.length; i++) {
             wordTouched += wordArr[i].name[0]
         }
+        commonValue.touchedWord = wordTouched;
         if (words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
             console.log("恭喜你答对了");
-            commonValue.touchedWord = wordTouched;
+
             // return true;
         }
         else {
