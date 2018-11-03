@@ -514,15 +514,15 @@ cc.Class({
                 NewPrefab.setPosition(cc.v2(((indy - 6) * wunit), ((indx - 6) * lunit) + 200));
             }
         }
+        //commonValue.touchedWord = ""
     },
 
 
     update(dt) {
         // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
-        if (commonValue.touchedWord != "") {
-            var wordforDisplay = commonValue.touchedWord;
-            this.DisplayW(board, wordforDisplay);
-
+        if (commonValue.touchedWord !== "") {
+            this.DisplayW(board, commonValue.touchedWord);
+            commonValue.touchedWord = ""
         }
     },
 
