@@ -490,52 +490,40 @@ cc.Class({
     },
 
     DisplayW: function (board, wordforDisplay) {
-        var addr;
-        addr = wordadd[wordforDisplay];
-        var i;
-        for (i = 0; i < wordforDisplay.length; i++) {
-            console.log("letter", wordforDisplay[i]);
-            var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
-            NewPrefab.setScale(0.5, 0.5); // 大小
-            NewPrefab.parent = this.AlphabetLayout;
-            NewPrefab.name = `${wordforDisplay[i]}`;
-            //this.addTouchEvent(NewPrefab);
-            //this.SpawnsObject.push(NewPrefab);
+        var addr = wordadd[wordforDisplay];
+        if (addr !== undefined) {
+            for (var i = 0; i < wordforDisplay.length; i++) {
+                //console.log("letter", wordforDisplay[i]);
+                var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
+                NewPrefab.setScale(0.5, 0.5); // 大小
+                NewPrefab.parent = this.AlphabetLayout;
+                NewPrefab.name = `${wordforDisplay[i]}`;
 
-            var indx;
-            var indy;
-            indx = addr[i][0];
-            indy = addr[i][1];
+                var indx = addr[i][0];
+                var indy = addr[i][1];
 
-            var l;
-            var w;
+                var l = 400;
+                var w = 250;
 
-            l = 400;
-            w = 250;
+                var lunit = l / 6;
+                var wunit = w / 6;
 
-            var lunit = l / 6;
-            var wunit = w / 6;
+                var startIndi = 0;
+                var startIndj = 200;
 
-            var startIndi = 0;
-            var startIndj = 200;
-
-            NewPrefab.setPosition(cc.v2(((indy - 6) * wunit), ((indx - 6) * lunit) + 200));
+                NewPrefab.setPosition(cc.v2(((indy - 6) * wunit), ((indx - 6) * lunit) + 200));
+            }
         }
     },
 
 
     update(dt) {
-        console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
+        // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
         if (commonValue.touchedWord != "") {
             var wordforDisplay = commonValue.touchedWord;
             this.DisplayW(board, wordforDisplay);
 
         }
     },
-    // update (dt) {
-    //     console.log("uhih",commonValue.touchedWord)
-    // },
-    onLoad() {
-        console.log("uhih", commonValue.touchedWord)
-    }
+
 });
