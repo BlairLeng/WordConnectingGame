@@ -8,44 +8,61 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-//var wordlist = ["pencil","pen","apple","hi"];//word list for testing purpose
+//var wordlist = ["pencil","pen"];//word list for testing purpose
 var address = new Object; // the dictionary that store each letter's index
 var rest = new Array(); // the array to store any words that CAN NOT be in the puzzle; we will place them addtionally
+var wordadd = new Object();
 var board; //board variable
 var BoardLen = 13;
 var BoardWid = 13;
 var wordAddress = new Array();
-var GeneratedWrod = require("../word_generation.js");
-var w = new GeneratedWrod();
-var wordlist = w.onLoad();
-console.log(wordlist);
-
-// var a = require("/Common.js");
-// var aa = new a();
-// var a = require("/AlphabetController.js");
+//var GeneratedWrod = require("../word_generation.js");
+//var w = new GeneratedWrod();
+//var wordlist = w.onLoad();
+//var wordlist = ["pencil","pen"];
+//var wordlist = wordlist.slice(0,4);
+//console.log(wordlist);
 
 var commonValue = require("/Common.js");
-var generatedWords = commonValue.generatedWords;
-var touchedWord = commonValue.touchedWord;
 
+var wordforDisplay;
+//var commonValue = new cValue();
+
+//var b = require("/AlphabetController.js");
+//var bl = new b();
+//var bool = bl.testWordBool;
+var wordlist = commonValue.generatedWords;
+//var wordlist = ["which","hi"];
+var wordforDisplay = commonValue.touchedWord;
+//var wordlist = wordlist.slice(0,4);
+//var fromAl = require("AlphabetController.js");
+
+
+//console.log("display",wordforDisplay);
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
 
+        AlphabetLayout: cc.Node,
+
+        Alphabet: {
+            default: [],
+            type: cc.Prefab
+        },
+
+
     },
         
 //example for testing
-    onLoad () {
-        // console.log("我出个", words)
-    },
 
     start () {
         board = this.CreateBoard();
         this.WordPuzzleMaker(board);
         console.log(board);
-        console.log(address);
+        console.log(wordadd);
+        //this.DisplayW(board,wordforDisplay);
 
     },
 
@@ -60,6 +77,7 @@ cc.Class({
         var i;//index variable
         for(i = 0;i<wordlist.length;i++){ //for loop to go through each word and place the word onto the board
             word = wordlist[i];
+            //console.log(word);
             this.PlaceWord(board,word,i); 
         }
 
@@ -75,9 +93,29 @@ cc.Class({
         //This function insert the index for each letter that has been placed on the 2D board 
         //into the Address dictionary that we will return in the end
         //INPUT: each char,index i, index j
+
+        if(letter in address)
+        {
+            var i;//for loop index variable
+            for(i=0;i<address[letter].length;i++) //to avoid insert same index again
+            {
+
+                if((address[letter][i][0]==indx)&&(address[letter][i][1]==indy))
+                {
+                    
+                }
+            }
+
+        }
+        else
+        {
+            address[letter] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
+        }
+
+
         var word = wordlist[n];
 
-        if(word in address) //if this particular char has already in dictionary
+        if(word in wordadd) //if this particular char has already in dictionary
         {
             /*
             var i;//for loop index variable
@@ -90,11 +128,11 @@ cc.Class({
                 }
             }
             */
-            address[word] = address[word].concat([[indx,indy]]); //add the index into the existing list
+            wordadd[word] = wordadd[word].concat([[indx,indy]]); //add the index into the existing list
         }
         else
         {
-            address[word] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
+            wordadd[word] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
         }
     },
 
@@ -141,6 +179,8 @@ cc.Class({
         var startpos;
 
         startpos = this.GetStartPosition(board,word);
+        //console.log(startpos);
+        //console.log("place this word",word);
 
 
 
@@ -158,6 +198,8 @@ cc.Class({
         x = startpos[0];
         y = startpos[1];
         flag = startpos[2]
+
+        //console.log("this word startpos",startpos);
         
         if(flag == 0)//place the word HORIZONTALLY
         {
@@ -271,6 +313,8 @@ cc.Class({
 
         var addlen;
         var key;
+        //console.log("place this word",word);
+     
 
         if(board[6][6] == 0)//According to the way we create the board,[6][6] is the center
         {                   //we will always first put the word in center (if center position is available)
@@ -286,6 +330,11 @@ cc.Class({
         {
             key = Object.keys(address)[i]; //variable to keep track of the current letter
 
+            //console.log("the current out key"+key);
+
+
+
+
 
             if(word.indexOf(key)!= -1)//if the word that we want to place contains the key
             {                         //for example, "sit" contains "i"
@@ -293,6 +342,7 @@ cc.Class({
                 //for example "sit" contains "i" and "i" is the second letter in the word “sit"
                 //there are one letter that is to the left of "i"
                 //and there are one letter that is to the right of "i"
+                //console.log("the current key"+key);
 
                 var ind;
                 var frontlen; //store the number of blocks we need the place the letters before the key letter; In "sit", we need one block to place "s" 
@@ -300,7 +350,11 @@ cc.Class({
             
                 ind = word.indexOf(key); //the index of the key letter in the word
                 frontlen = ind;
-                behindlen = word.length-1-i;
+                behindlen = word.length-1-ind;
+                //console.log("in starpos 单词是",word);
+
+                //console.log("前",frontlen);
+                //console.log("后",behindlen);
 
 
                 var a; //for loop index variable
@@ -465,8 +519,59 @@ cc.Class({
 
     },
 
+    DisplayW: function(board,wordforDisplay){
 
-    //update (dt) {
+        var addr;
 
-    //}
+        addr = wordadd[wordforDisplay];
+
+
+        var i;
+        for(i=0;i<wordforDisplay.length;i++)
+        {
+            console.log("letter",wordforDisplay[i]);
+            var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
+            NewPrefab.setScale(0.5, 0.5); // 大小
+            NewPrefab.parent = this.AlphabetLayout;
+            NewPrefab.name = `${wordforDisplay[i]}`;
+            //this.addTouchEvent(NewPrefab);
+            //this.SpawnsObject.push(NewPrefab);
+
+            var indx;
+            var indy;
+
+            indx = addr[i][0];
+            indy = addr[i][1];
+
+            var l;
+            var w;
+
+            l = 400;
+            w = 250;
+
+            var lunit = l/6;
+            var wunit = w/6;
+
+            var startIndi = 0;
+            var startIndj = 200;
+
+
+            NewPrefab.setPosition(cc.v2(((indy-6)*wunit), ((indx-6)*lunit)+200));
+        }
+
+
+    },
+
+
+    update (dt) {
+        console.log("这个是从commonvalue里过来的touched word",commonValue.touchedWord);
+        if(commonValue.touchedWord != "")
+        {
+            wordforDisplay = commonValue.touchedWord;
+            this.DisplayW(board,wordforDisplay);
+
+        }
+        
+
+    },
 });
