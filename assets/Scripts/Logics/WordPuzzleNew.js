@@ -33,7 +33,7 @@ var wordforDisplay;
 //var bool = bl.testWordBool;
 var wordlist = commonValue.generatedWords;
 //var wordlist = ["which","hi"];
-var wordforDisplay = commonValue.touchedWord;
+//var wordforDisplay = commonValue.touchedWord;
 //var wordlist = wordlist.slice(0,4);
 //var fromAl = require("AlphabetController.js");
 
@@ -54,10 +54,10 @@ cc.Class({
 
 
     },
-        
+
 //example for testing
 
-    start () {
+    start() {
         board = this.CreateBoard();
         this.WordPuzzleMaker(board);
         console.log(board);
@@ -67,55 +67,51 @@ cc.Class({
     },
 
 
-    WordPuzzleMaker: function(board){
+    WordPuzzleMaker: function (board) {
         //This function will go through each word in the list and place them onto the board one by one
 
         var word;//variable to keep track of each word in the wordlist 
 
 
-
         var i;//index variable
-        for(i = 0;i<wordlist.length;i++){ //for loop to go through each word and place the word onto the board
+        for (i = 0; i < wordlist.length; i++) { //for loop to go through each word and place the word onto the board
             word = wordlist[i];
             //console.log(word);
-            this.PlaceWord(board,word,i); 
+            this.PlaceWord(board, word, i);
         }
 
         var j;//for loop index variable
-        for(j=0;j<rest.length;j++) //if there are any words left in the rest array which means those words CAN NOT be part of the puzzle
+        for (j = 0; j < rest.length; j++) //if there are any words left in the rest array which means those words CAN NOT be part of the puzzle
         {                          //then put them onto any random empty spaces
-            this.PlaceRest(board,rest[j]);
+            this.PlaceRest(board, rest[j]);
         }
 
     },
 
-    AddressInsert: function(letter,indx,indy,n){
+    AddressInsert: function (letter, indx, indy, n) {
         //This function insert the index for each letter that has been placed on the 2D board 
         //into the Address dictionary that we will return in the end
         //INPUT: each char,index i, index j
 
-        if(letter in address)
-        {
+        if (letter in address) {
             var i;//for loop index variable
-            for(i=0;i<address[letter].length;i++) //to avoid insert same index again
+            for (i = 0; i < address[letter].length; i++) //to avoid insert same index again
             {
 
-                if((address[letter][i][0]==indx)&&(address[letter][i][1]==indy))
-                {
-                    
+                if ((address[letter][i][0] == indx) && (address[letter][i][1] == indy)) {
+
                 }
             }
 
         }
-        else
-        {
-            address[letter] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
+        else {
+            address[letter] = [[indx, indy]]; //otherwise, insert this char into the dictionary and record the index
         }
 
 
         var word = wordlist[n];
 
-        if(word in wordadd) //if this particular char has already in dictionary
+        if (word in wordadd) //if this particular char has already in dictionary
         {
             /*
             var i;//for loop index variable
@@ -128,16 +124,15 @@ cc.Class({
                 }
             }
             */
-            wordadd[word] = wordadd[word].concat([[indx,indy]]); //add the index into the existing list
+            wordadd[word] = wordadd[word].concat([[indx, indy]]); //add the index into the existing list
         }
-        else
-        {
-            wordadd[word] = [[indx,indy]]; //otherwise, insert this char into the dictionary and record the index
+        else {
+            wordadd[word] = [[indx, indy]]; //otherwise, insert this char into the dictionary and record the index
         }
     },
 
 
-    CreateBoard: function(){
+    CreateBoard: function () {
         var i;//for loop index variable
         var a;//for loop index variable
         var b;//for loop index variable
@@ -150,19 +145,19 @@ cc.Class({
         //letter: each letter that has been placed into the board
         //0 means that that specifc block is available; In other words, it is empty and you can place the letter/word
         //1 means that although that block is empty, the blocks besides it has been placed by some letters; 
-          // so in order not to conflict with other words, you can only place letter/word HORIZONTALLY
+        // so in order not to conflict with other words, you can only place letter/word HORIZONTALLY
         //2 means that although that block is empty, the blocks besides it has been placed by some letters; 
-          // so in order not to conflict with other words, you can only place letter/word VERTICALLY
+        // so in order not to conflict with other words, you can only place letter/word VERTICALLY
         //3 means that although that block is empty, the blocks besides it has been placed by some letters; 
-          // so in order not to conflict with other words, you CAN NOT place letter into this block
+        // so in order not to conflict with other words, you CAN NOT place letter into this block
 
-        for(i = 0;i<BoardLen;i++){
+        for (i = 0; i < BoardLen; i++) {
             ret[i] = new Array(BoardWid);
 
         }
 
-        for(a = 0;a<ret.length;a++){
-            for(b = 0;b<ret[a].length;b++){
+        for (a = 0; a < ret.length; a++) {
+            for (b = 0; b < ret[a].length; b++) {
                 ret[a][b] = 0;
             }
         }
@@ -170,7 +165,7 @@ cc.Class({
     },
 
 
-    PlaceWord: function(board,word,n){
+    PlaceWord: function (board, word, n) {
         //this function will get the starting postion(index) for the word
         //It will return [index i,index j, flag variable]
         //The flag variable serves as a message to tell how to place the word (horizontal or vertical)
@@ -178,14 +173,12 @@ cc.Class({
         //If the flag variable is 1, then we will place the word vertically;
         var startpos;
 
-        startpos = this.GetStartPosition(board,word);
+        startpos = this.GetStartPosition(board, word);
         //console.log(startpos);
         //console.log("place this word",word);
 
 
-
-        if(startpos[0]==-1)
-        {
+        if (startpos[0] == -1) {
             rest = rest.concat([word]);
 
             return board;
@@ -200,108 +193,97 @@ cc.Class({
         flag = startpos[2]
 
         //console.log("this word startpos",startpos);
-        
-        if(flag == 0)//place the word HORIZONTALLY
+
+        if (flag == 0)//place the word HORIZONTALLY
         {
 
             var i;//for loop index variable
-            for(i=0;i<word.length;i++){
-                if(i==0) //the first letter of the word
+            for (i = 0; i < word.length; i++) {
+                if (i == 0) //the first letter of the word
                 {
-                    if(board[x][y-1]==0)
-                    {
-                        board[x][y-1] = 3; //the block that is left to the first letter will be assigned to 3
-                                           //Because no matter how you place the letter into this block later
-                                           //it will conflict with the current word
-                    }
-                }
-                if(i==word.length-1) //the last letter of the word
-                {
-                    if(board[x][y+i+1]==0)
-                    {
-                        board[x][y+i+1] = 3; //the block that is right to the last letter will be assigned to 3
+                    if (board[x][y - 1] == 0) {
+                        board[x][y - 1] = 3; //the block that is left to the first letter will be assigned to 3
                                              //Because no matter how you place the letter into this block later
                                              //it will conflict with the current word
                     }
                 }
+                if (i == word.length - 1) //the last letter of the word
+                {
+                    if (board[x][y + i + 1] == 0) {
+                        board[x][y + i + 1] = 3; //the block that is right to the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
+                    }
+                }
 
-                if(board[x-1][y+i]==0)//by placing the letter into the current block, we need to assign 
+                if (board[x - 1][y + i] == 0)//by placing the letter into the current block, we need to assign
                 {                     //the block above the current block to 2 which means "available for only placing horizontal"
-                                      //In other words, from now on, the block above will only be able to place a word that is placed horizontally
-                    board[x-1][y+i]=2;
+                    //In other words, from now on, the block above will only be able to place a word that is placed horizontally
+                    board[x - 1][y + i] = 2;
                 }
-                else if(board[x-1][y+i]==1)
-                {
-                    board[x-1][y+i]=3;
+                else if (board[x - 1][y + i] == 1) {
+                    board[x - 1][y + i] = 3;
                 }
 
-                if(board[x+1][y+i]==0)//by placing the letter into the current block, we need to assign 
+                if (board[x + 1][y + i] == 0)//by placing the letter into the current block, we need to assign
                 {                     //the block below the current block to 2 which means "available for only placing horizontal"
-                    board[x+1][y+i]=2;
+                    board[x + 1][y + i] = 2;
 
                 }
-                else if(board[x+1][y+i]==2)
-                {
-                    board[x+1][y+i]=3;
+                else if (board[x + 1][y + i] == 2) {
+                    board[x + 1][y + i] = 3;
                 }
 
-                board[x][y+i] = word[i]; //place the letter onto the board
-                this.AddressInsert(word[i],x,y+i,n); //insert the index information into the Address dictionary 
-                                              //[letter,index i,index j]
+                board[x][y + i] = word[i]; //place the letter onto the board
+                this.AddressInsert(word[i], x, y + i, n); //insert the index information into the Address dictionary
+                //[letter,index i,index j]
             }
         }
-        else if(flag==1)//place the word VERTICALLY
+        else if (flag == 1)//place the word VERTICALLY
         {
             var j;//for loop index variable
-            for(j=0;j<word.length;j++)
-            {
-                if(j==0) //the first letter of the word
+            for (j = 0; j < word.length; j++) {
+                if (j == 0) //the first letter of the word
                 {
-                    if(board[x-1][y]==0)
-                    {
-                        board[x-1][y] = 3;  //the block that is above the first letter will be assigned to 3
-                                            //Because no matter how you place the letter into this block later
-                                            //it will conflict with the current word
-                    }               
+                    if (board[x - 1][y] == 0) {
+                        board[x - 1][y] = 3;  //the block that is above the first letter will be assigned to 3
+                                              //Because no matter how you place the letter into this block later
+                                              //it will conflict with the current word
+                    }
                 }
-                if(j==word.length-1) //the last letter of the word
+                if (j == word.length - 1) //the last letter of the word
                 {
-                    if(board[x+j+1][y]==0)
-                    {
-                        board[x+j+1][y] = 3; //the block that is below the last letter will be assigned to 3
-                                             //Because no matter how you place the letter into this block later
-                                             //it will conflict with the current word
+                    if (board[x + j + 1][y] == 0) {
+                        board[x + j + 1][y] = 3; //the block that is below the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
 
                     }
                 }
-                if(board[x+j][y-1]==0)
-                {
-                    board[x+j][y-1]=1;
+                if (board[x + j][y - 1] == 0) {
+                    board[x + j][y - 1] = 1;
                 }
-                else if(board[x+j][y-1]==2)
-                {
-                    board[x+j][y-1]=3;
+                else if (board[x + j][y - 1] == 2) {
+                    board[x + j][y - 1] = 3;
                 }
 
-                if(board[x+j][y+1]==0)
-                {
-                    board[x+j][y-1]=1;
+                if (board[x + j][y + 1] == 0) {
+                    board[x + j][y - 1] = 1;
                 }
-                else if (board[x+j][y+1]==0)
-                {
-                    board[x+j][y-1]=3;
+                else if (board[x + j][y + 1] == 0) {
+                    board[x + j][y - 1] = 3;
                 }
 
-                board[x+j][y] = word[j]; //place the letter onto the board
-                this.AddressInsert(word[j],x+j,y,n); //insert the index information into the Address dictionary 
-                                                   //[letter,index i,index j]
+                board[x + j][y] = word[j]; //place the letter onto the board
+                this.AddressInsert(word[j], x + j, y, n); //insert the index information into the Address dictionary
+                //[letter,index i,index j]
 
             }
         }
         return board;
     },
 
-    GetStartPosition: function(board,word){
+    GetStartPosition: function (board, word) {
         //This function will get the starting position for each word
         //Generally speaking the way to get starting postion:
         //we will go through the letters that have been placed onto the board to see if some of the letters can
@@ -314,11 +296,11 @@ cc.Class({
         var addlen;
         var key;
         //console.log("place this word",word);
-     
 
-        if(board[6][6] == 0)//According to the way we create the board,[6][6] is the center
+
+        if (board[6][6] == 0)//According to the way we create the board,[6][6] is the center
         {                   //we will always first put the word in center (if center position is available)
-            return [6,6,0];
+            return [6, 6, 0];
         }
 
         addlen = Object.keys(address).length;
@@ -326,17 +308,14 @@ cc.Class({
         //address is the Dictionary that we record the index of each letter that has been placed onto the board
 
         var i; //for loop index variable
-        for(i = 0;i<addlen;i++) //go through each letter in the address dictionary
+        for (i = 0; i < addlen; i++) //go through each letter in the address dictionary
         {
             key = Object.keys(address)[i]; //variable to keep track of the current letter
 
             //console.log("the current out key"+key);
 
 
-
-
-
-            if(word.indexOf(key)!= -1)//if the word that we want to place contains the key
+            if (word.indexOf(key) != -1)//if the word that we want to place contains the key
             {                         //for example, "sit" contains "i"
                 //By knowing the word contains the key letter is not enough, we also need to know the which position of the letter in the word
                 //for example "sit" contains "i" and "i" is the second letter in the word “sit"
@@ -347,10 +326,10 @@ cc.Class({
                 var ind;
                 var frontlen; //store the number of blocks we need the place the letters before the key letter; In "sit", we need one block to place "s" 
                 var behindlen; //store the number of blocks we need the place the letters after the key letter; In "sit", we need one block to place "t" 
-            
+
                 ind = word.indexOf(key); //the index of the key letter in the word
                 frontlen = ind;
-                behindlen = word.length-1-ind;
+                behindlen = word.length - 1 - ind;
                 //console.log("in starpos 单词是",word);
 
                 //console.log("前",frontlen);
@@ -358,7 +337,7 @@ cc.Class({
 
 
                 var a; //for loop index variable
-                for(a = 0; a<address[key].length;a++) //There are might be several same key letters on the board
+                for (a = 0; a < address[key].length; a++) //There are might be several same key letters on the board
                 {                                     //therefore, a for loop to go through each position for that key letter
 
                     var keyind; //variable to keep track the current key letter's index
@@ -369,13 +348,13 @@ cc.Class({
                     x = keyind[0];//variable to store the keyind's index i
                     y = keyind[1];//variable to store the keyind's index j
 
-                    if(this.CheckAvlH(x,y,frontlen,behindlen,board))//Check if this block has enough availability in horizontal direction
+                    if (this.CheckAvlH(x, y, frontlen, behindlen, board))//Check if this block has enough availability in horizontal direction
                     {                                               //if YES, then return the starting postion [index i,index j,flag = 0]
-                        return [x,y-frontlen,0];
+                        return [x, y - frontlen, 0];
                     }
-                    else if(this.CheckAvlV(x,y,frontlen,behindlen,board))//Check if this block has enough availability in vertical direction
+                    else if (this.CheckAvlV(x, y, frontlen, behindlen, board))//Check if this block has enough availability in vertical direction
                     {                                  //if YES, then return the starting postion [index i,index j,flag = 1]
-                        return [x-frontlen,y,1];
+                        return [x - frontlen, y, 1];
                     }
 
                 }
@@ -387,10 +366,10 @@ cc.Class({
         //have enough empty spaces, then we will return [-1,-1,-1] to tell the PlaceWord function that there is no starting position
         //for this word, so PlaceWord function will do nothing and just return the board without any changes.
 
-        return [-1,-1,-1];
+        return [-1, -1, -1];
     },
 
-    CheckAvlH: function(indx,indy,front,behind,board){
+    CheckAvlH: function (indx, indy, front, behind, board) {
 
         //This function will check the availability of a given block in the horizontal direction
         //INPUT:[index x,index y,front,behind,board]
@@ -400,16 +379,16 @@ cc.Class({
         var frontlen = front;
         var behindlen = behind;
 
-        var x = indx; 
+        var x = indx;
         var y = indy;
 
 
-        if(((x-frontlen)<0) && ((x+behindlen)>12)) //Due to the way we created the board
+        if (((x - frontlen) < 0) && ((x + behindlen) > 12)) //Due to the way we created the board
         {                                          //the board is limited by BoardLen and BoardWid.
-                                                   //we need check if the index will out of the bound. In other words, not enough spaces due to out of bound
+            //we need check if the index will out of the bound. In other words, not enough spaces due to out of bound
             return false;
         }
-        if(((y-frontlen)<0) && ((y+behindlen)>12)) //same thing above; checking boundary
+        if (((y - frontlen) < 0) && ((y + behindlen) > 12)) //same thing above; checking boundary
         {
             return false;
         }
@@ -418,36 +397,32 @@ cc.Class({
         //By recalling the rules above, if we want to place the word horizontally, each block should be either 0 or 1
 
         var i; //for loop index variable
-        for(i = 1;i<=frontlen;i++)
-        {
-            if((board[x][y-i]==3)||(board[x][y-i]==2)) //since the element inside a block can only be 5 kinds(0,1,2,3,letter)
+        for (i = 1; i <= frontlen; i++) {
+            if ((board[x][y - i] == 3) || (board[x][y - i] == 2)) //since the element inside a block can only be 5 kinds(0,1,2,3,letter)
             {                                          //after the 1st if statement, the possible element can only be (0,1,letter)
-                                                       //In this if statement, we check if the element is a letter, then return false
+                //In this if statement, we check if the element is a letter, then return false
                 return false;
             }
-            if((board[x][y-i]!=0)&&(board[x][y-i]!=1))
-            {                                          
+            if ((board[x][y - i] != 0) && (board[x][y - i] != 1)) {
                 return false;
             }
         }
 
         var j; //for loop index variable
-        for(j = 1;j<=behindlen;j++) //same thing as above
+        for (j = 1; j <= behindlen; j++) //same thing as above
         {
-            
-            if((board[x][y+i]==3)||(board[x][y+i]==2)) 
-            {
+
+            if ((board[x][y + i] == 3) || (board[x][y + i] == 2)) {
                 return false;
             }
-            if((board[x][y+i]!=0)&&(board[x][y+i]!=1))
-            {
+            if ((board[x][y + i] != 0) && (board[x][y + i] != 1)) {
                 return false;
             }
         }
         return true;
     },
 
-    CheckAvlV: function(indx,indy,front,behind,board){
+    CheckAvlV: function (indx, indy, front, behind, board) {
 
         //This function will check the availability of a given block in the horizontal direction
         //INPUT:[index x,index y,front,behind,board]
@@ -456,15 +431,15 @@ cc.Class({
         var frontlen = front;
         var behindlen = behind;
 
-        var x = indx; 
+        var x = indx;
         var y = indy;
 
-        if(((x-frontlen)<0) && ((x+behindlen)>12)) //Due to the way we created the board
+        if (((x - frontlen) < 0) && ((x + behindlen) > 12)) //Due to the way we created the board
         {                                          //the board is limited by BoardLen and BoardWid.
-                                                   //we need check if the index will out of the bound. In other words, not enough spaces due to out of bound
+            //we need check if the index will out of the bound. In other words, not enough spaces due to out of bound
             return false;
         }
-        if(((y-frontlen)<0) && ((y+behindlen)>12)) //same thing above; checking boundary
+        if (((y - frontlen) < 0) && ((y + behindlen) > 12)) //same thing above; checking boundary
         {
             return false;
         }
@@ -473,29 +448,25 @@ cc.Class({
         //By recalling the rules above, if we want to place the word vertically, each block should be either 0 or 2
 
         var i; //for loop index variable
-        for(i = 1;i<=frontlen;i++)     //since the element inside a block can only be 5 kinds(0,1,2,3,letter)
+        for (i = 1; i <= frontlen; i++)     //since the element inside a block can only be 5 kinds(0,1,2,3,letter)
         {                              //after the 1st if statement, the possible element can only be (0,2,letter)
-                                       //In this if statement, we check if the element is a letter, then return false        
-            if((board[x-i][y]==3)||(board[x-i][y]==1)) 
-            {
+            //In this if statement, we check if the element is a letter, then return false
+            if ((board[x - i][y] == 3) || (board[x - i][y] == 1)) {
                 return false;
             }
-            if((board[x-i][y]!=0)&&(board[x-i][y]!=2))
-            {
+            if ((board[x - i][y] != 0) && (board[x - i][y] != 2)) {
                 return false;
 
             }
         }
 
         var j;
-        for(j = 1;j<=behindlen;j++)//same thing as above
+        for (j = 1; j <= behindlen; j++)//same thing as above
         {
-            if((board[x+i][y]==3)||(board[x+i][y]==1))
-            {
+            if ((board[x + i][y] == 3) || (board[x + i][y] == 1)) {
                 return false;
             }
-            if((board[x+i][y]!=0)&&(board[x+i][y]!=2))
-            {
+            if ((board[x + i][y] != 0) && (board[x + i][y] != 2)) {
                 return false;
             }
         }
@@ -503,7 +474,7 @@ cc.Class({
         return true;
     },
 
-    PlaceRest: function(board,word){
+    PlaceRest: function (board, word) {
         //this function will place the words that CAN NOT be in the puzzle
         var starti;
         var startj;
@@ -512,24 +483,18 @@ cc.Class({
         startj = 0;
 
         var i;
-        for(i=0;i<word.length;i++)
-        {
-            board[starti][startj+i] = word[i];
+        for (i = 0; i < word.length; i++) {
+            board[starti][startj + i] = word[i];
         }
 
     },
 
-    DisplayW: function(board,wordforDisplay){
-
+    DisplayW: function (board, wordforDisplay) {
         var addr;
-
         addr = wordadd[wordforDisplay];
-
-
         var i;
-        for(i=0;i<wordforDisplay.length;i++)
-        {
-            console.log("letter",wordforDisplay[i]);
+        for (i = 0; i < wordforDisplay.length; i++) {
+            console.log("letter", wordforDisplay[i]);
             var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
             NewPrefab.setScale(0.5, 0.5); // 大小
             NewPrefab.parent = this.AlphabetLayout;
@@ -539,7 +504,6 @@ cc.Class({
 
             var indx;
             var indy;
-
             indx = addr[i][0];
             indy = addr[i][1];
 
@@ -549,29 +513,29 @@ cc.Class({
             l = 400;
             w = 250;
 
-            var lunit = l/6;
-            var wunit = w/6;
+            var lunit = l / 6;
+            var wunit = w / 6;
 
             var startIndi = 0;
             var startIndj = 200;
 
-
-            NewPrefab.setPosition(cc.v2(((indy-6)*wunit), ((indx-6)*lunit)+200));
+            NewPrefab.setPosition(cc.v2(((indy - 6) * wunit), ((indx - 6) * lunit) + 200));
         }
-
-
     },
 
 
-    update (dt) {
-        console.log("这个是从commonvalue里过来的touched word",commonValue.touchedWord);
-        if(commonValue.touchedWord != "")
-        {
-            wordforDisplay = commonValue.touchedWord;
-            this.DisplayW(board,wordforDisplay);
+    update(dt) {
+        console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
+        if (commonValue.touchedWord != "") {
+            var wordforDisplay = commonValue.touchedWord;
+            this.DisplayW(board, wordforDisplay);
 
         }
-        
-
     },
+    // update (dt) {
+    //     console.log("uhih",commonValue.touchedWord)
+    // },
+    onLoad() {
+        console.log("uhih", commonValue.touchedWord)
+    }
 });
