@@ -522,7 +522,7 @@ cc.Class({
         // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
         if (commonValue.touchedWord !== "") {
             this.DisplayW(board, commonValue.touchedWord);
-            commonValue.touchedWord = ""
+            commonValue.touchedWord = "";
         }
     },
 
