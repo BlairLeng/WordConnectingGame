@@ -9,9 +9,20 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var commonValue = require("/Common.js");
 var generatedWord = require("../word_generation.js");
+var Level = require("/LevelManager.js");
+var Board = require("/WordPuzzleNew.js");
+
+var LevelManager = new Level();
 var word = new generatedWord();
-var words = word.onLoad();
-commonValue.generatedWords = words; // 给common里generatedWords赋值
+// var words = word.onLoad();
+
+
+var result = [];
+for (var i = 0; i < 10; i++) {
+    result[i] = word.onLoad();
+    console.log(result[i])
+}
+commonValue.generatedWords = result[commonValue.GameScore]; // 给common里generatedWords赋值
 
 module.exports = cc.Class({
 
@@ -54,22 +65,30 @@ module.exports = cc.Class({
         allLine: {
             // 存储生成线 键值对
             default: []
-        }
+        },
+
+        currentWord:[]
 
     },
 
     onLoad: function () {
-        console.log("这个生成的随机词", words);
-        this.init();
+
+        // console.log("这个生成的随机词", words);
+        console.log("这个生成的随机词组", result);
+
+        this.init(commonValue.GameScore);
     },
 
-    init: function () {
-        this.generateAlphabet();
-        this.generateLine(this.AlphabetLocation);
+    init: function (level) {
+        var word = result[level][0];
+        // var longestWord = word;
+        this.currentWord = result[level];
+        this.generateAlphabet(word);
+        this.generateLine(this.AlphabetLocation,word);
     },
 
-    generateAlphabet: function () {
-        var longestWord = words[0];
+    generateAlphabet: function (longestWord) {
+        // var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {
             var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[longestWord[i]]]);
             NewPrefab.setScale(1, 1); // 大小
@@ -140,7 +159,7 @@ module.exports = cc.Class({
             wordTouched += wordArr[i].name[0]
         }
         commonValue.touchedWord = wordTouched;
-        if (words.indexOf(wordTouched) !== -1
+        if (this.currentWord.indexOf(wordTouched) !== -1//(words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
             console.log("恭喜你答对了");
@@ -156,8 +175,8 @@ module.exports = cc.Class({
     },
 
     // new line
-    generateLine: function (LocationArr) {
-        var longestWord = words[0];
+    generateLine: function (LocationArr,longestWord) {
+        // var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {
             var fab = cc.instantiate(this.Line);
             fab.parent = this.lineLayout;
@@ -207,6 +226,22 @@ module.exports = cc.Class({
             this.testWord(this.alphabetsTouched);
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
+            var s = cc.find("/Canvas/Alphabet");
+            if (this.wordHasFound.length>1) {
+                var Spawns = cc.find("/Canvas/Alphabet");
+                LevelManager.destroyNode(Spawns.children);
+                var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
+                LevelManager.destroyNode(SpawnsDis.children);
+                commonValue.GameScore += 1; // 关卡更新
+                LevelManager.enterAfterGameScene();
+                this.init(commonValue.GameScore);
+
+                board = this.CreateBoard();
+                this.WordPuzzleMaker(board);
+                //words = result[commonValue.GameScore];
+            }
+            console.log(commonValue.GameScore)
+
             console.log("屏幕接触取消");
         }, this);
     },
