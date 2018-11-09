@@ -40,7 +40,7 @@ var wordlist = commonValue.generatedWords;
 
 //console.log("display",wordforDisplay);
 
-cc.Class({
+module.exports = cc.Class({
     extends: cc.Component,
 
     properties: {
