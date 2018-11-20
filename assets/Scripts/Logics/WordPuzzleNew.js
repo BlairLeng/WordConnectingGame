@@ -32,15 +32,20 @@ var wordforDisplay;
 //var bl = new b();
 //var bool = bl.testWordBool;
 var wordlist = commonValue.generatedWords;
+var wordlist = wordlist.slice(0,4);
+commonValue.PresentedWords = commonValue.PresentedWords.concat(wordlist);
+
+console.log("这一关所需要显示的单词为",commonValue.PresentedWords);
+
 //var wordlist = ["which","hi"];
-//var wordforDisplay = commonValue.touchedWord;
+var wordforDisplay = commonValue.touchedWord;
 //var wordlist = wordlist.slice(0,4);
 //var fromAl = require("AlphabetController.js");
 
 
 //console.log("display",wordforDisplay);
 
-module.exports = cc.Class({
+cc.Class({
     extends: cc.Component,
 
     properties: {
