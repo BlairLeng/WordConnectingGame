@@ -38,6 +38,10 @@ module.exports = {
     touchedWord: "",
     // 触摸瞬间点击的单词
 
+    WinBoolean: false,//是否通关
+
+    PresentedWords:[],//已显示的单词
+
     GameClubButton: null,//游戏圈按钮
     GameScene: null,
 

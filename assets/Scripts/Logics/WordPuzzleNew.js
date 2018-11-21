@@ -23,6 +23,7 @@ var wordAddress = new Array();
 //var wordlist = wordlist.slice(0,4);
 //console.log(wordlist);
 
+var wordcount = 0;
 var commonValue = require("/Common.js");
 
 var wordforDisplay;
@@ -64,7 +65,7 @@ cc.Class({
 
     start() {
         board = this.CreateBoard();
-        this.WordPuzzleMaker(board);
+        this.WordPuzzleMaker(board,wordlist);
         console.log(board);
         console.log(wordadd);
         //this.DisplayW(board,wordforDisplay);
@@ -72,10 +73,11 @@ cc.Class({
     },
 
 
-    WordPuzzleMaker: function (board) {
+    WordPuzzleMaker: function (board,wordlist) {
         //This function will go through each word in the list and place them onto the board one by one
 
-        var word;//variable to keep track of each word in the wordlist 
+        var word;//variable to keep track of each word in the wordlist
+        var wordlist; 
 
 
         var i;//index variable
@@ -497,6 +499,7 @@ cc.Class({
     DisplayW: function (board, wordforDisplay) {
         var addr = wordadd[wordforDisplay];
         if (addr !== undefined) {
+            wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
                 //console.log("letter", wordforDisplay[i]);
                 var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
@@ -528,6 +531,11 @@ cc.Class({
         if (commonValue.touchedWord !== "") {
             this.DisplayW(board, commonValue.touchedWord);
             commonValue.touchedWord = "";
+        }
+        if(wordcount == 4){
+            commonValue.WinBoolean = true;
+            wordcount = 0;
+
         }
     },
 
