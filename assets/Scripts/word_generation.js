@@ -9,6 +9,7 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
 var dic = require("dic/level.js");
+var commonValue = require("/Common.js");
 module.exports = cc.Class({
     extends: cc.Component,
 
@@ -94,14 +95,7 @@ module.exports = cc.Class({
         return out;
     },
 
-
-    onLoad: function () {
-
-        // while (true)
-
-        //var myString = "happy";
-        //cc.log(myString);
-
+    generated: function () {
         var myString = this.pickRandomProperty(dic);
         var myList = this.combinations(myString);
 
@@ -120,11 +114,18 @@ module.exports = cc.Class({
         // // edit
         result = this.remove_duplicates(result)
         return result;
-        //cc.log("valid words: " + result)
+    },
+
+
+    onLoad: function () {
+            commonValue.rankWord = this.generated();
+            console.log("lol",commonValue.rankWord)
 
     },
 
-    //start () {},
+    //start () {
+
+    //},
 
     // update (dt) {},
 
