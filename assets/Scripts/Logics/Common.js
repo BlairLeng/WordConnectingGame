@@ -32,8 +32,8 @@ module.exports = {
         "z": 25
     },
 
-    generatedWords: [],
-    // 每具游戏生成的单词
+    rankWord:[],
+    // 所有关卡预存词汇
 
     touchedWord: "",
     // 触摸瞬间点击的单词

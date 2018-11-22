@@ -14,15 +14,17 @@ var Board = require("/WordPuzzleNew.js");
 
 var LevelManager = new Level();
 var word = new generatedWord();
+var BoardCreator = new Board();
 // var words = word.onLoad();
 
 
-var result = [];
-for (var i = 0; i < 10; i++) {
-    result[i] = word.onLoad();
-    console.log(result[i])
-}
-commonValue.generatedWords = result[commonValue.GameScore]; // 给common里generatedWords赋值
+// var result = [];
+// for (var i = 0; i < 10; i++) {
+//     result[i] = word.onLoad();
+//     console.log(result[i])
+// }
+//
+// commonValue.generatedWords = result[commonValue.GameScore]; // 给common里generatedWords赋值
 
 module.exports = cc.Class({
 
@@ -74,15 +76,16 @@ module.exports = cc.Class({
     onLoad: function () {
 
         // console.log("这个生成的随机词", words);
-        console.log("这个生成的随机词组", result);
-
-        this.init(commonValue.GameScore);
+        //console.log("这个生成的随机词组", result);
+        word.onLoad();
+        this.init();
     },
 
-    init: function (level) {
-        var word = result[level][0];
+    init: function () {
+        var word = commonValue.rankWord[0];
+        console.log("commonValue.rankWord", word)
         // var longestWord = word;
-        this.currentWord = result[level];
+        this.currentWord = commonValue.rankWord;
         this.generateAlphabet(word);
         this.generateLine(this.AlphabetLocation,word);
     },
@@ -227,7 +230,8 @@ module.exports = cc.Class({
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
             var s = cc.find("/Canvas/Alphabet");
-            if (this.wordHasFound.length>1) {
+            console.log(commonValue.WinBoolean)
+            if (commonValue.WinBoolean) {
                 var Spawns = cc.find("/Canvas/Alphabet");
                 LevelManager.destroyNode(Spawns.children);
                 var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
@@ -236,8 +240,8 @@ module.exports = cc.Class({
                 LevelManager.enterAfterGameScene();
                 this.init(commonValue.GameScore);
 
-                board = this.CreateBoard();
-                this.WordPuzzleMaker(board);
+                BoardCreator.onLoad();
+                commonValue.WinBoolean = false;
                 //words = result[commonValue.GameScore];
             }
             console.log(commonValue.GameScore)

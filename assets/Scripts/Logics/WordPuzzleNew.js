@@ -32,9 +32,11 @@ var wordforDisplay;
 //var b = require("/AlphabetController.js");
 //var bl = new b();
 //var bool = bl.testWordBool;
-var wordlist = commonValue.generatedWords;
-var wordlist = wordlist.slice(0,4);
-commonValue.PresentedWords = commonValue.PresentedWords.concat(wordlist);
+// var wordlist = commonValue.rankWord[commonValue.GameScore];
+// // var wordlist = wordlist.slice(0,4);
+// console.log("这苏打粉",commonValue.rankWord[commonValue.GameScore]);
+//
+// commonValue.PresentedWords = commonValue.PresentedWords.concat(wordlist);
 
 console.log("这一关所需要显示的单词为",commonValue.PresentedWords);
 
@@ -58,14 +60,17 @@ cc.Class({
             type: cc.Prefab
         },
 
+        wordlist: []
+
 
     },
 
 //example for testing
 
-    start() {
+    onLoad: function () {
+        this.wordlist = commonValue.rankWord;
         board = this.CreateBoard();
-        this.WordPuzzleMaker(board,wordlist);
+        this.WordPuzzleMaker(board,this.wordlist.slice(0,4));
         console.log(board);
         console.log(wordadd);
         //this.DisplayW(board,wordforDisplay);
@@ -77,7 +82,6 @@ cc.Class({
         //This function will go through each word in the list and place them onto the board one by one
 
         var word;//variable to keep track of each word in the wordlist
-        var wordlist; 
 
 
         var i;//index variable
@@ -116,7 +120,7 @@ cc.Class({
         }
 
 
-        var word = wordlist[n];
+        var word = this.wordlist[n]; // 此处要再确认
 
         if (word in wordadd) //if this particular char has already in dictionary
         {
@@ -532,8 +536,9 @@ cc.Class({
             this.DisplayW(board, commonValue.touchedWord);
             commonValue.touchedWord = "";
         }
-        if(wordcount == 4){
+        if(wordcount == 2){
             commonValue.WinBoolean = true;
+            console.log("fdsaf",commonValue.WinBoolean)
             wordcount = 0;
 
         }
