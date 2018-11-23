@@ -72,7 +72,8 @@ cc.Class({
         board = this.CreateBoard();
         this.WordPuzzleMaker(board,this.wordlist.slice(0,4));
         console.log(board);
-        console.log(wordadd);
+
+
         //this.DisplayW(board,wordforDisplay);
 
     },

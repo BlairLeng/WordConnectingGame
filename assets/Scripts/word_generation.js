@@ -118,6 +118,7 @@ module.exports = cc.Class({
 
 
     onLoad: function () {
+
             commonValue.rankWord = this.generated();
             console.log("lol",commonValue.rankWord)
 

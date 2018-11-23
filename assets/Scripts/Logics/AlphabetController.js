@@ -75,6 +75,7 @@ module.exports = cc.Class({
 
     onLoad: function () {
 
+
         // console.log("这个生成的随机词", words);
         //console.log("这个生成的随机词组", result);
         word.onLoad();
@@ -237,6 +238,15 @@ module.exports = cc.Class({
                 var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
                 LevelManager.destroyNode(SpawnsDis.children);
                 commonValue.GameScore += 1; // 关卡更新
+
+                // var userData = {
+                //     GameScore: commonValue.GameScore,
+                // };
+                // cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
+                //
+                // var userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
+                // console.log(userData);
+
                 LevelManager.enterAfterGameScene();
                 this.init(commonValue.GameScore);
 
@@ -244,7 +254,7 @@ module.exports = cc.Class({
                 commonValue.WinBoolean = false;
                 //words = result[commonValue.GameScore];
             }
-            console.log(commonValue.GameScore)
+            //console.log(commonValue.GameScore)
 
             console.log("屏幕接触取消");
         }, this);
