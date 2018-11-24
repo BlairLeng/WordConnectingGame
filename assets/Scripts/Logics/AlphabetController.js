@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var commonValue = require("/Common.js");
+// var commonValue = require("/Common.js");
 var generatedWord = require("../word_generation.js");
 var Level = require("/LevelManager.js");
 var Board = require("/WordPuzzleNew.js");
@@ -83,10 +83,10 @@ module.exports = cc.Class({
     },
 
     init: function () {
-        var word = commonValue.rankWord[0];
+        var word = rankWord[0];
         console.log("commonValue.rankWord", word)
         // var longestWord = word;
-        this.currentWord = commonValue.rankWord;
+        this.currentWord = rankWord;
         this.generateAlphabet(word);
         this.generateLine(this.AlphabetLocation,word);
     },
@@ -94,7 +94,7 @@ module.exports = cc.Class({
     generateAlphabet: function (longestWord) {
         // var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {
-            var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[longestWord[i]]]);
+            var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[longestWord[i]]]);
             NewPrefab.setScale(1, 1); // 大小
             NewPrefab.parent = this.AlphabetLayout; // 母节点
             NewPrefab.name = `${longestWord[i] + i}`; // 名字
@@ -162,7 +162,7 @@ module.exports = cc.Class({
         for (var i = 0; i < wordArr.length; i++) {
             wordTouched += wordArr[i].name[0]
         }
-        commonValue.touchedWord = wordTouched;
+        touchedWord = wordTouched;
         if (this.currentWord.indexOf(wordTouched) !== -1//(words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
@@ -231,13 +231,13 @@ module.exports = cc.Class({
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
             var s = cc.find("/Canvas/Alphabet");
-            console.log(commonValue.WinBoolean)
-            if (commonValue.WinBoolean) {
+            console.log(WinBoolean)
+            if (WinBoolean) {
                 var Spawns = cc.find("/Canvas/Alphabet");
                 LevelManager.destroyNode(Spawns.children);
                 var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
                 LevelManager.destroyNode(SpawnsDis.children);
-                commonValue.GameScore += 1; // 关卡更新
+                GameScore += 1; // 关卡更新
 
                 // var userData = {
                 //     GameScore: commonValue.GameScore,
@@ -248,10 +248,10 @@ module.exports = cc.Class({
                 // console.log(userData);
 
                 LevelManager.enterAfterGameScene();
-                this.init(commonValue.GameScore);
+                this.init(GameScore);
 
                 BoardCreator.onLoad();
-                commonValue.WinBoolean = false;
+                WinBoolean = false;
                 //words = result[commonValue.GameScore];
             }
             //console.log(commonValue.GameScore)

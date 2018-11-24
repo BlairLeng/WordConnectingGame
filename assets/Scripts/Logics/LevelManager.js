@@ -14,7 +14,6 @@ module.exports = cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        this._Canvas = cc.find("Canvas");
         this.NextGame= cc.find("Canvas/NextGame");
         this.NextGame.on(cc.Node.EventType.TOUCH_END, () => this.enterNewGameScene(), this.NextGame)
     },

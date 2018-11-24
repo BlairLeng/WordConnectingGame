@@ -8,8 +8,9 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var dic = require("dic/level.js");
-var commonValue = require("/Common.js");
+// var dic = require("dic/level.js");
+var dic = window.dictionary
+// var commonValue = require("/Common.js");
 module.exports = cc.Class({
     extends: cc.Component,
 
@@ -119,8 +120,8 @@ module.exports = cc.Class({
 
     onLoad: function () {
 
-            commonValue.rankWord = this.generated();
-            console.log("lol",commonValue.rankWord)
+        rankWord = this.generated();
+        console.log("lol", rankWord)
 
     },
 

@@ -1,4 +1,5 @@
-module.exports = {
+// module.exports = {
+window.dictionary = {
 pen : " 钢笔 ",
 pencil : " 铅笔 ",
 ruler : " 尺子",
