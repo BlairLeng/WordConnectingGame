@@ -19,30 +19,34 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        cc.game.addPersistRootNode(this.Node)
-        this._ZenBtn= cc.find("Canvas/ZenBtn")
-        this._ZenBtn.on(cc.Node.EventType.TOUCH_END, () => this._ZenBtnClick(), this._ZenBtn)
+        cc.game.addPersistRootNode(this.Node);
+        this._ZenBtn= cc.find("Canvas/ZenBtn");
+        this._ZenBtn.on(cc.Node.EventType.TOUCH_END, () => this._ZenBtnClick(), this._ZenBtn);
 
-        this._setting= cc.find("Canvas/setting")
-        this._setting.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._setting)
+        this._setting= cc.find("Canvas/setting");
+        this._setting.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._setting);
+
+        this._rank= cc.find("Canvas/rank");
+        this._rank.on(cc.Node.EventType.TOUCH_END, () => this._rankClick(), this._rank);
+
+
     },
 
     _ZenBtnClick: function () {
         //console.log("hello")
-        this.enterLevelScene();
-    },
-
-    enterLevelScene: function () {
-        cc.director.loadScene("GameStart")
+        cc.director.loadScene("Game")
     },
 
     _settingClick: function () {
-        this.enterSettingPanel();
-    },
-
-    enterSettingPanel: function () {
+        console.log("fds")
         this._Canvas = cc.find("Canvas");
         var settinggen = new controller(this.SettingPanel,1,"",this._Canvas);
         var setting = settinggen.GeneratePics();
-    }
+    },
+
+    _rankClick: function () {
+        //console.log("hello")
+        cc.director.loadScene("RankingView")
+    },
+
 });
