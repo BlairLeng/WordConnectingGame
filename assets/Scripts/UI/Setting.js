@@ -8,43 +8,26 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var controller = require("../Framework/Controller/Generate");
-// var commonValue = require("/Common.js");
+
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        setting: cc.Node,
-        hint: cc.Node,
-        Canvas: cc.Node,
-        rankLabel: cc.Label,
-        coinLabel: cc.Label,
-
-        SettingPanel: {
-            default: null,
-            type: cc.Prefab
-        }
+        settingPanel: cc.Node,
+        back: cc.Node,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        this.rankLabel.string = (GameScore+1).toString();
-        cc.game.addPersistRootNode(this.Node);
-        this.setting.on(cc.Node.EventType.TOUCH_START, () => this.settingClick(), this.setting)
-        this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint)
+        this.back.on(cc.Node.EventType.TOUCH_START, () => this.backClick(), this.back)
     },
 
-    settingClick: function () {
-        this.Canvas = cc.find("Canvas");
-        var settinggen = new controller(this.SettingPanel, 1, "", this.Canvas);
-        var setting = settinggen.GeneratePics();
+    backClick: function () {
+        this.settingPanel.destroy();
     },
 
-    hintClick: function () {
-        GameCoin += 25;
-        this.coinLabel.string = (GameCoin).toString();
-    },
 
     // start() {
     //

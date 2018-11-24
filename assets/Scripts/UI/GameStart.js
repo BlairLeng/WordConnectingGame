@@ -1,4 +1,4 @@
-var controller = require("../Framework/Controller/Generate")
+var controller = require("../Framework/Controller/Generate");
 cc.Class({
     extends: cc.Component,
 

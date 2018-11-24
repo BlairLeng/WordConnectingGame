@@ -24,7 +24,7 @@ var wordAddress = new Array();
 //console.log(wordlist);
 
 var wordcount = 0;
-var commonValue = require("/Common.js");
+// var commonValue = require("/Common.js");
 
 var wordforDisplay;
 //var commonValue = new cValue();
@@ -38,10 +38,10 @@ var wordforDisplay;
 //
 // commonValue.PresentedWords = commonValue.PresentedWords.concat(wordlist);
 
-console.log("这一关所需要显示的单词为",commonValue.PresentedWords);
+// console.log("这一关所需要显示的单词为",commonValue.PresentedWords);
 
 //var wordlist = ["which","hi"];
-var wordforDisplay = commonValue.touchedWord;
+// var wordforDisplay = commonValue.touchedWord;
 //var wordlist = wordlist.slice(0,4);
 //var fromAl = require("AlphabetController.js");
 
@@ -68,7 +68,7 @@ cc.Class({
 //example for testing
 
     onLoad: function () {
-        this.wordlist = commonValue.rankWord;
+        this.wordlist = rankWord;
         board = this.CreateBoard();
         this.WordPuzzleMaker(board,this.wordlist.slice(0,4));
         console.log(board);
@@ -507,7 +507,7 @@ cc.Class({
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
                 //console.log("letter", wordforDisplay[i]);
-                var NewPrefab = cc.instantiate(this.Alphabet[commonValue.alphabetOrder[wordforDisplay[i]]]);
+                var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[wordforDisplay[i]]]);
                 NewPrefab.setScale(0.5, 0.5); // 大小
                 NewPrefab.parent = this.AlphabetLayout;
                 NewPrefab.name = `${wordforDisplay[i]}`;
@@ -533,13 +533,13 @@ cc.Class({
 
     update(dt) {
         // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
-        if (commonValue.touchedWord !== "") {
-            this.DisplayW(board, commonValue.touchedWord);
-            commonValue.touchedWord = "";
+        if (touchedWord !== "") {
+            this.DisplayW(board, touchedWord);
+            touchedWord = "";
         }
         if(wordcount == 2){
-            commonValue.WinBoolean = true;
-            console.log("fdsaf",commonValue.WinBoolean)
+            WinBoolean = true;
+            console.log("fdsaf",WinBoolean)
             wordcount = 0;
 
         }
