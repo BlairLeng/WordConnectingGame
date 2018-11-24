@@ -25,23 +25,21 @@ cc.Class({
 
     onLoad: function () {
         cc.game.addPersistRootNode(this.Node)
-        this._setting = cc.find("Canvas/setting")
-        this._setting.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._setting)
+
+        this._settingbutton= cc.find("Canvas/Button/button_setting")
+        this._settingbutton.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._settingbutton)
     },
 
     _settingClick: function () {
-        this.enterSettingPanel();
-    },
-
-    enterSettingPanel: function () {
+        console.log("hihihi")
         this._Canvas = cc.find("Canvas");
         var settinggen = new controller(this.SettingPanel, 1, "", this._Canvas);
         var setting = settinggen.GeneratePics();
     },
 
-    start() {
-
-    },
+    // start() {
+    //
+    // },
 
     // update (dt) {},
 });
