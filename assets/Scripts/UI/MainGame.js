@@ -8,7 +8,6 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var controller = require("../Framework/Controller/Generate");
-// var commonValue = require("/Common.js");
 
 cc.Class({
     extends: cc.Component,
@@ -30,20 +29,21 @@ cc.Class({
 
     onLoad: function () {
         this.rankLabel.string = (GameScore+1).toString();
-        cc.game.addPersistRootNode(this.Node);
+        this.coinLabel.string = (window.GameCoin).toString();
+        // cc.game.addPersistRootNode(this.Node);
         this.setting.on(cc.Node.EventType.TOUCH_START, () => this.settingClick(), this.setting)
         this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint)
     },
 
     settingClick: function () {
         this.Canvas = cc.find("Canvas");
-        var settinggen = new controller(this.SettingPanel, 1, "", this.Canvas);
-        var setting = settinggen.GeneratePics();
+        var settingGen = new controller(this.SettingPanel, 1, "", this.Canvas);
+        settingGen.GeneratePics();
     },
 
     hintClick: function () {
-        GameCoin += 25;
-        this.coinLabel.string = (GameCoin).toString();
+        window.GameCoin += 25;
+        this.coinLabel.string = (window.GameCoin).toString();
     },
 
     // start() {

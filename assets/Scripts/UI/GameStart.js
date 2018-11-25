@@ -19,7 +19,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        cc.game.addPersistRootNode(this.Node);
+        // cc.game.addPersistRootNode(this.Node);
         this._ZenBtn= cc.find("Canvas/ZenBtn");
         this._ZenBtn.on(cc.Node.EventType.TOUCH_END, () => this._ZenBtnClick(), this._ZenBtn);
 
@@ -33,20 +33,17 @@ cc.Class({
     },
 
     _ZenBtnClick: function () {
-        //console.log("hello")
         cc.director.loadScene("Game")
     },
 
     _settingClick: function () {
-        console.log("fds")
         this._Canvas = cc.find("Canvas");
         var settinggen = new controller(this.SettingPanel,1,"",this._Canvas);
-        var setting = settinggen.GeneratePics();
+        settinggen.GeneratePics();
     },
 
     _rankClick: function () {
-        //console.log("hello")
         cc.director.loadScene("RankingView")
-    },
+    }
 
 });

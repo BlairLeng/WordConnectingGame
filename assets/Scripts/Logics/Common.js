@@ -49,6 +49,7 @@ window.alphabetOrder= {
 
     window.GameScore= 0;//游戏得分
     window.GameHeightScore= 0;//游戏最高分
+    window.GameCoin = 0;//游戏积分
 
     window.IS_GAME_MUSIC= true;// 游戏音效
 

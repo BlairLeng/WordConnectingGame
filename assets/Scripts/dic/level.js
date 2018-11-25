@@ -1,4 +1,3 @@
-// module.exports = {
 window.dictionary = {
 pen : " 钢笔 ",
 pencil : " 铅笔 ",

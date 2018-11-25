@@ -67,7 +67,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 27,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": ""
   },
@@ -97,7 +97,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "8eyAi5uU9LorGU8e1kcav7"
+    "_id": ""
   },
   {
     "__type__": "cc.PrefabInfo",

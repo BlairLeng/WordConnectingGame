@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.16328125,
-      "y": 0.16328125,
+      "x": 0.16484375,
+      "y": 0.16484375,
       "z": 1
     },
     "_quat": {
@@ -52,10 +52,10 @@
       "z": 0,
       "w": 1
     },
-    "_localZOrder": 2,
+    "_zIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "f6f6a998-0b7b-473d-b67e-c24cc9938b5a"
+    "_id": "e3e86c1f-aa96-4d28-83c1-30b6f2c1ccce"
   },
   {
     "__type__": "cc.Node",
@@ -121,7 +121,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 3,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "e0UDJWordLfYlF+C+264J3"
   },
@@ -182,7 +182,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 4,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "37S/lxBgtA/YgaBxlwsqhB"
   },
@@ -289,7 +289,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 5,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "c0toVyzXJDpJXiC+GTxxmK"
   },
@@ -352,7 +352,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 18,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "5eVGR9wntJDZ1NVz1jMRkV"
   },
@@ -455,7 +455,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 19,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "a6YwrMc99EyKLaz+sk79Ea"
   },
@@ -568,7 +568,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 20,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "7fg7VWzbBIMaNARv9yONXS"
   },
@@ -629,7 +629,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 9,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "8fhXK2qJNMzrrxE70jMg53"
   },
@@ -828,7 +828,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 21,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "70gmMOeKpCr6bUpYaqtw8g"
   },
@@ -889,7 +889,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 11,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "48OZZFmmRIFqM49pM0WNya"
   },
@@ -1088,7 +1088,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 22,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "deci/PBPRBiZfGa6gpE2OB"
   },
@@ -1149,7 +1149,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 13,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "ed1uQwND9BRKIZKfXBGy8e"
   },
@@ -1348,7 +1348,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 23,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "c6j9NxpFhOI6KrjhTkEXma"
   },
@@ -1409,7 +1409,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 15,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "ecwM+7bNRFtJTE6n7A7TTP"
   },
@@ -1608,7 +1608,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 24,
+    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "e7pRbZzV5LYr1w7NZK+gBG"
   },
@@ -1669,9 +1669,9 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": -2147483648,
+    "_zIndex": 0,
     "groupIndex": 0,
-    "_id": "42fZsoKeNFjL4uV4cYJIaW"
+    "_id": "f1a7cdrVpBvpYWxnMwSDGt"
   },
   {
     "__type__": "cc.Label",
@@ -1696,7 +1696,7 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "d1TfKE+3BKhYdD5M9p3vfN"
+    "_id": "6bcpbZP1tOFKB+1PokQkDL"
   },
   {
     "__type__": "cc.PrivateNode",
@@ -1755,9 +1755,9 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": -2147483648,
+    "_zIndex": 0,
     "groupIndex": 0,
-    "_id": "a0wEF5SIdLSI/cphAACDh1"
+    "_id": "6a4wr0j3NISZhYg2KYMB7o"
   },
   {
     "__type__": "cc.Label",
@@ -1782,7 +1782,7 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "b40qTO7HxObqsrFiv7zWVx"
+    "_id": "94tmPWdvxI166el2sLFPsX"
   },
   {
     "__type__": "cc.RichText",
@@ -1803,7 +1803,7 @@
     "_id": "fcT9hGEvJM5498TSxYj8Qi"
   },
   {
-    "__type__": "ed81eRMoXVHSY0+WVmALWHp",
+    "__type__": "2e9aag4x+9Dar8Sj+sKJJfM",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1820,9 +1820,9 @@
       "__id__": 25
     },
     "rankingScrollView": {
-      "__id__": 10
+      "__id__": 34
     },
-    "_id": "6dP0z54AtHrLootuaXVOif"
+    "_id": "61J9r5cClFZ7HE1vJ4xeSP"
   },
   {
     "__type__": "cc.PrefabInfo",

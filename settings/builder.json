@@ -10,11 +10,7 @@
   "appKey": "",
   "appSecret": "",
   "encryptJs": true,
-  "excludeScenes": [
-    "0618811f-9ae2-4a16-912f-0967a559e689",
-    "7cb9eec4-2641-477c-9a90-e44ff247f29e",
-    "e3e86c1f-aa96-4d28-83c1-30b6f2c1ccce"
-  ],
+  "excludeScenes": [],
   "fb-instant-games": {},
   "includeAnySDK": false,
   "includeSDKBox": false,
@@ -37,9 +33,9 @@
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "startScene": "3ea3ba47-ac64-49f5-a4f1-366a453392b2",
+  "startScene": "7cb9eec4-2641-477c-9a90-e44ff247f29e",
   "title": "WordConnectingGame",
-  "webOrientation": "auto",
+  "webOrientation": "portrait",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wxfb97824b791a536c",

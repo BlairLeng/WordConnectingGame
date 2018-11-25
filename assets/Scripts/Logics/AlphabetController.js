@@ -8,23 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 // var commonValue = require("/Common.js");
-var generatedWord = require("../word_generation.js");
-var Level = require("/LevelManager.js");
-var Board = require("/WordPuzzleNew.js");
-
-var LevelManager = new Level();
+var generatedWord = require("./word_generation");
 var word = new generatedWord();
-var BoardCreator = new Board();
-// var words = word.onLoad();
-
-
-// var result = [];
-// for (var i = 0; i < 10; i++) {
-//     result[i] = word.onLoad();
-//     console.log(result[i])
-// }
-//
-// commonValue.generatedWords = result[commonValue.GameScore]; // 给common里generatedWords赋值
 
 module.exports = cc.Class({
 
@@ -32,7 +17,7 @@ module.exports = cc.Class({
 
     properties: {
         AlphabetLayout: cc.Node,
-            // 生成字母的母节点
+        // 生成字母的母节点
 
         Alphabet: {
             // 生成字母的prefab
@@ -41,13 +26,13 @@ module.exports = cc.Class({
         },
 
         alphabetsTouched: [],
-            // 触目过程中存储字母
+        // 触目过程中存储字母
 
         wordHasFound: [],
-            // 触目过程中的单词
+        // 触目过程中的单词
 
         SpawnsObject: [],
-            // 生成字母存储
+        // 生成字母存储
 
         AlphabetLocation: {
             // 存储生成字母的坐标 键值对
@@ -56,43 +41,38 @@ module.exports = cc.Class({
         },
 
         Line: cc.Prefab,
-            // 生成线prefab
+        // 生成线prefab
 
         lineLayout: cc.Node,
-            // 生成线的母节点
+        // 生成线的母节点
 
         line: [],
-            // 触摸过程经过的线
+        // 触摸过程经过的线
 
         allLine: {
             // 存储生成线 键值对
             default: []
         },
 
-        currentWord:[]
+        currentWord: []
 
     },
 
     onLoad: function () {
-
-
-        // console.log("这个生成的随机词", words);
-        //console.log("这个生成的随机词组", result);
+        console.log(window.dictionary["pen"])
         word.onLoad();
         this.init();
     },
 
     init: function () {
         var word = rankWord[0];
-        console.log("commonValue.rankWord", word)
-        // var longestWord = word;
+        console.log("commonValue.rankWord", word);
         this.currentWord = rankWord;
         this.generateAlphabet(word);
-        this.generateLine(this.AlphabetLocation,word);
+        this.generateLine(this.AlphabetLocation, word);
     },
 
     generateAlphabet: function (longestWord) {
-        // var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {
             var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[longestWord[i]]]);
             NewPrefab.setScale(1, 1); // 大小
@@ -101,36 +81,36 @@ module.exports = cc.Class({
             this.SpawnsObject.push(NewPrefab);
 
             if (longestWord.length === 3) {
-                if (i === 0) NewPrefab.setPosition(cc.v2(-100, -400)); // 位置
-                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -300)); // 位置
-                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
+                if (i === 0) NewPrefab.setPosition(cc.v2(-215, -418)); // 位置
+                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -650)); // 位置
+                else if (i === 2) NewPrefab.setPosition(cc.v2(215, -418)); // 位置
             }
             if (longestWord.length === 4) {
-                if (i === 0) NewPrefab.setPosition(cc.v2(0, -250)); // 位置
-                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -450)); // 位置
-                else if (i === 2) NewPrefab.setPosition(cc.v2(-100, -350)); // 位置
-                else if (i === 3) NewPrefab.setPosition(cc.v2(100, -350)); // 位置
+                if (i === 0) NewPrefab.setPosition(cc.v2(-211, -424)); // 位置
+                else if (i === 1) NewPrefab.setPosition(cc.v2(236, -590)); // 位置
+                else if (i === 2) NewPrefab.setPosition(cc.v2(97, -330)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(-75, -678)); // 位置
             }
             if (longestWord.length === 5) {
-                if (i === 0) NewPrefab.setPosition(cc.v2(0, -200)); // 位置
-                else if (i === 1) NewPrefab.setPosition(cc.v2(-100, -400)); // 位置
-                else if (i === 2) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
-                else if (i === 3) NewPrefab.setPosition(cc.v2(-200, -300)); // 位置
-                else if (i === 4) NewPrefab.setPosition(cc.v2(200, -300)); // 位置
+                if (i === 0) NewPrefab.setPosition(cc.v2(-233, -461)); // 位置
+                else if (i === 1) NewPrefab.setPosition(cc.v2(0, -296)); // 位置
+                else if (i === 2) NewPrefab.setPosition(cc.v2(227, -403)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(182, -650)); // 位置
+                else if (i === 4) NewPrefab.setPosition(cc.v2(-97, -680)); // 位置
             }
             if (longestWord.length === 6) {
-                if (i === 0) NewPrefab.setPosition(cc.v2(-100, -100)); // 位置
-                else if (i === 1) NewPrefab.setPosition(cc.v2(100, -100)); // 位置
-                else if (i === 2) NewPrefab.setPosition(cc.v2(-100, -400)); // 位置
-                else if (i === 3) NewPrefab.setPosition(cc.v2(100, -400)); // 位置
-                else if (i === 4) NewPrefab.setPosition(cc.v2(-200, -250)); // 位置
-                else if (i === 5) NewPrefab.setPosition(cc.v2(200, -250)); // 位置
+                if (i === 0) NewPrefab.setPosition(cc.v2(102, -289)); // 位置
+                else if (i === 1) NewPrefab.setPosition(cc.v2(245, -474)); // 位置
+                else if (i === 2) NewPrefab.setPosition(cc.v2(167, -686)); // 位置
+                else if (i === 3) NewPrefab.setPosition(cc.v2(-254, -530)); // 位置
+                else if (i === 4) NewPrefab.setPosition(cc.v2(-86, -713)); // 位置
+                else if (i === 5) NewPrefab.setPosition(cc.v2(-159, -320)); // 位置
             }
         }
-        this.arrayToTablePosition(this.AlphabetLocation,this.SpawnsObject);
+        this.arrayToTablePosition(this.AlphabetLocation, this.SpawnsObject);
     },
 
-    arrayToTablePosition: function (Table,Array) {
+    arrayToTablePosition: function (Table, Array) {
         for (var i = 0; i < Array.length; i++) {
             Table[Array[i].name] = Array[i].position;
         }
@@ -162,41 +142,38 @@ module.exports = cc.Class({
         for (var i = 0; i < wordArr.length; i++) {
             wordTouched += wordArr[i].name[0]
         }
-        touchedWord = wordTouched;
+        window.touchedWord = wordTouched;
         if (this.currentWord.indexOf(wordTouched) !== -1//(words.indexOf(wordTouched) !== -1
             && this.wordHasFound.indexOf(wordTouched) === -1) {
             this.wordHasFound.push(wordTouched);
             console.log("恭喜你答对了");
-
-            // return true;
         }
         else {
             console.log("你是傻了吧");
-            // return false;
         }
         console.log(wordTouched);
         console.log(this.wordHasFound);
     },
 
     // new line
-    generateLine: function (LocationArr,longestWord) {
+    generateLine: function (LocationArr, longestWord) {
         // var longestWord = words[0];
         for (var i = 0; i < longestWord.length; i++) {
             var fab = cc.instantiate(this.Line);
             fab.parent = this.lineLayout;
             fab.name = `${longestWord[i] + i}`;
             fab.opacity = 0;
-            fab.width = 60;
-            fab.height = 60;
-            fab.setAnchorPoint(0.5,0.5);
+            fab.width = 160;
+            fab.height = 160;
+            fab.setAnchorPoint(0.5, 0.5);
             fab.setPosition(LocationArr[fab.name]);
             this.lineEventListener(LocationArr[fab.name], fab);
             this.line.push(fab);
         }
-        this.arrayToTable(this.allLine,this.line);
+        this.arrayToTable(this.allLine, this.line);
     },
 
-    arrayToTable: function (Table,Array) {
+    arrayToTable: function (Table, Array) {
         for (var i = 0; i < Array.length; i++) {
             Table[Array[i].name] = Array[i];
         }
@@ -230,42 +207,31 @@ module.exports = cc.Class({
             this.testWord(this.alphabetsTouched);
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
-            var s = cc.find("/Canvas/Alphabet");
-            console.log(WinBoolean)
-            if (WinBoolean) {
-                var Spawns = cc.find("/Canvas/Alphabet");
-                LevelManager.destroyNode(Spawns.children);
-                var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
-                LevelManager.destroyNode(SpawnsDis.children);
-                GameScore += 1; // 关卡更新
-
-                // var userData = {
-                //     GameScore: commonValue.GameScore,
-                // };
-                // cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
-                //
-                // var userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
-                // console.log(userData);
-
-                LevelManager.enterAfterGameScene();
-                this.init(GameScore);
-
-                BoardCreator.onLoad();
-                WinBoolean = false;
-                //words = result[commonValue.GameScore];
-            }
-            //console.log(commonValue.GameScore)
-
+            console.log(WinBoolean);
             console.log("屏幕接触取消");
         }, this);
     },
 
+    // nextRoundClear: function () {
+    //     if (WinBoolean) {
+    //         var Spawns = cc.find("/Canvas/Alphabet");
+    //         LevelManager.destroyNode(Spawns.children);
+    //         var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
+    //         LevelManager.destroyNode(SpawnsDis.children);
+    //         GameScore += 1; // 关卡更新
+    //         LevelManager.enterAfterGameScene();
+    //         this.init();
+    //         BoardCreator.onLoad();
+    //         WinBoolean = false;
+    //     }
+    // },
+
     objectState: function (Object, Array) {
         for (var i = 0; i < Array.length; i++) {
             Object[Array[i].name].opacity = 255;
-            Object[Array[i].name].width = 10;
-            Object[Array[i].name].height = 10;
-            Object[Array[i].name].setAnchorPoint(0,0.5)
+            Object[Array[i].name].width = 20;
+            Object[Array[i].name].height = 20;
+            Object[Array[i].name].setAnchorPoint(0, 0.5)
         }
     },
 
@@ -283,6 +249,7 @@ module.exports = cc.Class({
     },
 
     updateLine: function (LinePointArr, PointLocationArr, touchPoint) {
+        console.log("开始画线")
 
         if (LinePointArr.length > 1) {
             for (var i = 0; i < LinePointArr.length - 1; i++) {
@@ -302,9 +269,9 @@ module.exports = cc.Class({
         for (var i = 0; i < LinePointArr.length; i++) {
             LinePointArr[i].opacity = 0;
             LinePointArr[i].rotation = 0;
-            LinePointArr[i].width = 60;
-            LinePointArr[i].height = 60;
-            LinePointArr[i].setAnchorPoint(0.5,0.5)
+            LinePointArr[i].width = 160;
+            LinePointArr[i].height = 160;
+            LinePointArr[i].setAnchorPoint(0.5, 0.5)
         }
     }
 });
