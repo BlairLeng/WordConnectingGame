@@ -2,14 +2,8 @@ module.exports = cc.Class({
     extends: cc.Component,
 
     properties: {
-        TestBlock: {
-            default: null,
-            type: cc.Prefab
-        },
 
-        _Canvas : cc.Node,
     },
-
 
     // LIFE-CYCLE CALLBACKS:
 

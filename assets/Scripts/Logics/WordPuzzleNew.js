@@ -7,6 +7,14 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+var Level = require("./LevelManager");
+var alphabetController = require("./AlphabetController");
+// var Board = require("./WordPuzzleNew");
+
+var LevelManager = new Level();
+// var AlphabetController = new alphabetController();
+// var BoardCreator = new Board();
+
 
 //var wordlist = ["pencil","pen"];//word list for testing purpose
 var address = new Object; // the dictionary that store each letter's index
@@ -538,8 +546,18 @@ cc.Class({
             touchedWord = "";
         }
         if(wordcount == 2){
-            WinBoolean = true;
-            console.log("fdsaf",WinBoolean)
+            window.WinBoolean = true;
+            var Spawns = cc.find("/Canvas/Alphabet");
+            LevelManager.destroyNode(Spawns.children);
+            var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
+            LevelManager.destroyNode(SpawnsDis.children);
+            window.GameScore += 1; // 关卡更新
+            LevelManager.enterAfterGameScene();
+
+            Spawns.getComponent('AlphabetController').init();
+
+            this.onLoad();
+            window.WinBoolean = false;
             wordcount = 0;
 
         }
