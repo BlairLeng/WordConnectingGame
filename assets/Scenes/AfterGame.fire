@@ -91,7 +91,7 @@
     "_level": 1,
     "_components": [
       {
-        "__id__": 24
+        "__id__": 25
       }
     ],
     "_prefab": null,
@@ -784,6 +784,9 @@
       "__id__": 15
     },
     "_enabled": true,
+    "share": {
+      "__id__": 12
+    },
     "_id": "570ibhFyxM6aL97kQWN32T"
   },
   {
@@ -806,6 +809,9 @@
     "_components": [
       {
         "__id__": 23
+      },
+      {
+        "__id__": 24
       }
     ],
     "_prefab": null,
@@ -1050,7 +1056,7 @@
     "node": {
       "__id__": 17
     },
-    "_enabled": true,
+    "_enabled": false,
     "groupFriendButton": null,
     "friendButton": null,
     "gameOverButton": null,
@@ -1058,6 +1064,16 @@
       "__id__": 21
     },
     "_id": "8aBeJSAP1Pc5f7IS06/C3M"
+  },
+  {
+    "__type__": "c4389UJKl9NCo8USIhvMT9H",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 17
+    },
+    "_enabled": true,
+    "_id": "29ijU0kFtFgbFzcy62m147"
   },
   {
     "__type__": "cc.Canvas",

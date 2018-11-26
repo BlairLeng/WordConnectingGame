@@ -12,7 +12,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        rankingScrollView: cc.Sprite,//显示排行榜
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -20,21 +19,17 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        // if (CC_WECHATGAME) {
-        //     window.wx.postMessage({
-        //         messageType: 6,
-        //         MAIN_MENU_NUM: "x1",
-        //     });
-        // }
-        let score = 1
 
         if (CC_WECHATGAME) {
+            window.wx.showShareMenu({withShareTicket: true});//设置分享按钮，方便获取群id展示群排行榜
             window.wx.postMessage({
-                messageType: 3,
-                MAIN_MENU_NUM: "x1",
-                score: score,
+                messageType: 4,
+                MAIN_MENU_NUM: "x1"
             });
         }
+
+
+
     },
 
     // update (dt) {},

@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.2890625,
-      "y": 0.2890625,
+      "x": 0.21561686197916666,
+      "y": 0.21561686197916666,
       "z": 1
     },
     "_quat": {
@@ -1514,8 +1514,7 @@
     "node": {
       "__id__": 24
     },
-    "_enabled": true,
-    "rankingScrollView": null,
+    "_enabled": false,
     "_id": "e5IFuPKBdBDLBJRhIWHAu/"
   },
   {

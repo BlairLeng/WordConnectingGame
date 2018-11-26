@@ -59,12 +59,13 @@ module.exports = cc.Class({
     },
 
     onLoad: function () {
-        console.log(window.dictionary["pen"])
+
         word.onLoad();
         this.init();
     },
 
     init: function () {
+
         var word = rankWord[0];
         console.log("commonValue.rankWord", word);
         this.currentWord = rankWord;
