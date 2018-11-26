@@ -29,15 +29,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 234,
+      "g": 86,
+      "b": 100,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 10,
-      "height": 10
+      "width": 20,
+      "height": 20
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

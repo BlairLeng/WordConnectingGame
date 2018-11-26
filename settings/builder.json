@@ -33,7 +33,7 @@
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "startScene": "7cb9eec4-2641-477c-9a90-e44ff247f29e",
+  "startScene": "0618811f-9ae2-4a16-912f-0967a559e689",
   "title": "WordConnectingGame",
   "webOrientation": "portrait",
   "wechatgame": {
@@ -41,7 +41,7 @@
     "appid": "wxfb97824b791a536c",
     "isSubdomain": false,
     "orientation": "portrait",
-    "subContext": ""
+    "subContext": "SubGame2"
   },
   "xxteaKey": "6d332d14-2740-4c",
   "zipCompressJs": true

@@ -39,7 +39,7 @@ module.exports = cc.Class({
         // // 获取动画关联的clip
         // var clip = animState.clip;
         // // 获取动画的名字
-        var name = animState.name;
+        // var name = animState.name;
         console.log('名字:',name);
 
         // // 获取动画的播放速度

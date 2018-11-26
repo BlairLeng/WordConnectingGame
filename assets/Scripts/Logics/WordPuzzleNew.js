@@ -551,6 +551,7 @@ cc.Class({
             LevelManager.destroyNode(Spawns.children);
             var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
             LevelManager.destroyNode(SpawnsDis.children);
+            window.allWordFound = [];
             window.GameScore += 1; // 关卡更新
             LevelManager.enterAfterGameScene();
 
