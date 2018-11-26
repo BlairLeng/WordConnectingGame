@@ -38,8 +38,8 @@ cc.Class({
     // 播放动画片段Emerge
     playEmerge: function() { 
         var anim = this.getComponent(cc.Animation);
-        var state = anim.play('Emerge');
-        var pause = state.isPaused;
+        // var state = anim.play('Emerge');
+        // var pause = state.isPaused;
         anim.play('Emerge');
     },
 

@@ -15,11 +15,17 @@ cc.Class({
     properties: {
         setting: cc.Node,
         hint: cc.Node,
+        dictionary: cc.Node,
         Canvas: cc.Node,
         rankLabel: cc.Label,
         coinLabel: cc.Label,
 
         SettingPanel: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        DictionaryPanel: {
             default: null,
             type: cc.Prefab
         }
@@ -31,8 +37,9 @@ cc.Class({
         this.rankLabel.string = (GameScore+1).toString();
         this.coinLabel.string = (window.GameCoin).toString();
         // cc.game.addPersistRootNode(this.Node);
-        this.setting.on(cc.Node.EventType.TOUCH_START, () => this.settingClick(), this.setting)
-        this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint)
+        this.setting.on(cc.Node.EventType.TOUCH_START, () => this.settingClick(), this.setting);
+        this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint);
+        this.dictionary.on(cc.Node.EventType.TOUCH_START, () => this.dictionaryClick(), this.dictionary)
     },
 
     settingClick: function () {
@@ -42,9 +49,16 @@ cc.Class({
     },
 
     hintClick: function () {
-        window.GameCoin += 25;
+        window.GameCoin -= 10;
         this.coinLabel.string = (window.GameCoin).toString();
     },
+
+    dictionaryClick: function () {
+        this.Canvas = cc.find("Canvas");
+        var dictionaryGen = new controller(this.DictionaryPanel, 1, "", this.Canvas);
+        var dictionaryPanel = dictionaryGen.GeneratePics();
+        // this.dictionary.on(cc.Node.EventType.TOUCH_START, () => dictionaryGen.DestroyPics(dictionaryPanel), this.dictionary)
+    }
 
     // start() {
     //

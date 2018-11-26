@@ -423,6 +423,7 @@ module.exports = cc.Class({
             this.testWord(this.alphabetsTouched);
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
+            window.allWordFound = this.wordHasFound;
             console.log(WinBoolean);
             console.log("屏幕接触取消");
         }, this);
@@ -465,8 +466,6 @@ module.exports = cc.Class({
     },
 
     updateLine: function (LinePointArr, PointLocationArr, touchPoint) {
-        console.log("开始画线")
-
         if (LinePointArr.length > 1) {
             for (var i = 0; i < LinePointArr.length - 1; i++) {
                 var pointIndex1 = LinePointArr[i + 1].name;

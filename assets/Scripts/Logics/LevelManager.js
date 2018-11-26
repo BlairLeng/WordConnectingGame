@@ -22,6 +22,24 @@ module.exports = cc.Class({
     },
 
     enterAfterGameScene: function () {
+        window.GameCoin += 15;
+
+        var score = window.GameScore;
+        if (CC_WECHATGAME) {
+            window.wx.postMessage({
+                messageType: 3,
+                MAIN_MENU_NUM: "x1",
+                score: score,
+            });
+        }
+
+        if (CC_WECHATGAME) {
+            window.wx.showShareMenu({withShareTicket: true});//设置分享按钮，方便获取群id展示群排行榜
+            window.wx.postMessage({
+                messageType: 4,
+                MAIN_MENU_NUM: "x1"
+            });
+        }
         cc.director.loadScene("AfterGame")
     }
 
