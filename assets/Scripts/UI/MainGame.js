@@ -8,7 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var controller = require("../Framework/Controller/Generate");
-var Display = require("../WordPuzzleNew")
+
 
 
 cc.Class({
@@ -54,10 +54,6 @@ cc.Class({
 
     hintClick: function () {
         window.GameCoin -= 10;
-
-
-        var DisplayNew = new Display ();
-        DisplayNew.DisplayHint();
 
         this.coinLabel.string = (window.GameCoin).toString();
     },

@@ -23,11 +23,12 @@ cc.Class({
         this._ZenBtn= cc.find("Canvas/ZenBtn");
         this._ZenBtn.on(cc.Node.EventType.TOUCH_END, () => this._ZenBtnClick(), this._ZenBtn);
 
-        this._setting= cc.find("Canvas/setting");
-        this._setting.on(cc.Node.EventType.TOUCH_END, () => this._settingClick(), this._setting);
-
         this._rank= cc.find("Canvas/rank");
         this._rank.on(cc.Node.EventType.TOUCH_END, () => this._rankClick(), this._rank);
+
+        this.share = cc.find("Canvas/shareFriend");
+        this.share.on(cc.Node.EventType.TOUCH_END, () => this.onShareBtn(), this.share);
+
 
 
     },
@@ -44,6 +45,24 @@ cc.Class({
 
     _rankClick: function () {
         cc.director.loadScene("RankingView")
+    },
+
+    onShareBtn: function(){ //分享按钮
+        cc.log("点击分享按钮");
+        //主动拉起分享接口
+        cc.loader.loadRes("texture/share",function(err,data){
+            wx.shareAppMessage({
+                title: "不怕，就来PK！",
+                imageUrl: data.url,
+                success(res){
+                    console.log("转发成功!!!");
+                    // window.GameCoin += 20;
+                },
+                fail(res){
+                    console.log("转发失败!!!");
+                }
+            })
+        });
     }
 
 });

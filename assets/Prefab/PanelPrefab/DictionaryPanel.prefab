@@ -161,7 +161,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "5535b593-3403-422c-8370-6d7c3a29397f"
+      "__uuid__": "004cac55-edd0-490f-9482-b75f0a841224"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -221,7 +221,7 @@
       "a": 255
     },
     "_N$normalSprite": {
-      "__uuid__": "5535b593-3403-422c-8370-6d7c3a29397f"
+      "__uuid__": "004cac55-edd0-490f-9482-b75f0a841224"
     },
     "_N$pressedSprite": {
       "__uuid__": "e9ec654c-97a2-4787-9325-e6a10375219a"
@@ -868,7 +868,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "cc5b041d-97c6-43fd-896e-87788100e2e4"
+      "__uuid__": "fe9a0495-781f-4536-af8b-2678252adfb7"
     },
     "_type": 1,
     "_sizeMode": 0,
