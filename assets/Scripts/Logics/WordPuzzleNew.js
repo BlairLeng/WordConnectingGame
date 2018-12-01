@@ -94,8 +94,6 @@ cc.Class({
         }
         // console.log(frequencyX,frequencyY);
 
-
-
         var arrX = Object.keys(frequencyX);
         var minX = Math.min(...arrX);
         var maxX = Math.max(...arrX);
@@ -110,13 +108,13 @@ cc.Class({
         var generate = new Generate([this.Square1, this.Square2, this.Square3], 1, 1, this.DisplayLayout);
         generate.GenerateDisplay(message);
 
-
+        var a = maxX - minX + 1 < message && (maxX - Math.round((maxX - minX + 1) / 2)) <= message ? Math.round((maxX - minX + 1) / 2) : minX;
+        var b = maxY - 6 + 1 <= message ? (maxY + 1 - message) : 6;
         for (var i = 0; i < test2.length; i++) {
-
-            this.DisplayLayout.getChildByName(`${[test2[i][0]- minX,test2[i][1]-6]}`).opacity = 255;
-            console.log([test2[i][1]-6, test2[i][0]- minX]);
+            this.DisplayLayout.getChildByName(`${[test2[i][0]- a,test2[i][1]-b]}`).opacity = 100;
+            //console.log([test2[i][0]- a,test2[i][1]-6]);
         }
-        console.log(test2, this.DisplayLayout)
+        // console.log(test2, this.DisplayLayout)
 
 
         var word = wordl[0];

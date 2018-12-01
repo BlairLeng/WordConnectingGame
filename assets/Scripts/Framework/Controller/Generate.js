@@ -35,7 +35,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(1, 1);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 130;
@@ -56,7 +56,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(1, 1);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 80;
@@ -77,7 +77,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(0.85, 0.85);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 80;
@@ -118,7 +118,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(0.72, 0.72);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 80;
@@ -140,7 +140,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(0.6, 0.6);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 80;
@@ -161,7 +161,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(0.55, 0.55);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // console.log(NewPrefab)
                 // console.log("名字x", NewPrefab.name[0],"名字y", NewPrefab.name[2])
                 this.address.getComponent(cc.Layout).paddingRight = 60;
@@ -182,7 +182,7 @@ var generate = cc.Class({
                 NewPrefab.setScale(0.5, 0.5);
                 NewPrefab.parent = this.address;
                 NewPrefab.name = `${[i,j]}`;
-                NewPrefab.opacity = 0;
+                // NewPrefab.opacity = 0;
                 // NewPrefab.setPosition(cc.v2((starti+(indi - 6) * uniti),(startj-(indj - 6) * unitj)));
                 this.address.getComponent(cc.Layout).paddingRight = 60;
                 this.address.getComponent(cc.Layout).paddingLeft = 60;
