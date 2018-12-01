@@ -16,6 +16,8 @@ module.exports = cc.Class({
     extends: cc.Component,
 
     properties: {
+        WordTouchedLabel: cc.Label,
+
         AlphabetLayout: cc.Node,
         // 生成字母的母节点
 
@@ -413,6 +415,10 @@ module.exports = cc.Class({
             var checkedAlphabet = this.checkAlphabet(this.SpawnsObject, touchLoc);
             this.pushTouchedAlphabet(checkedAlphabet);
             this.objectState(this.allLine, this.alphabetsTouched);
+            // console.log("这个东西",this.alphabetsTouched);
+            this.displayWordTouched(this.alphabetsTouched);
+
+
             this.updateLine(this.alphabetsTouched, this.AlphabetLocation, worldTouchLoc);
             console.log("正在与屏幕接触");
         }, this);
@@ -425,24 +431,19 @@ module.exports = cc.Class({
             this.clearLine(this.line);
             this.alphabetsTouched = []; // 清空触摸过的字母数组
             window.allWordFound = this.wordHasFound;
+            this.WordTouchedLabel.string = ("").toString();
             console.log(WinBoolean);
             console.log("屏幕接触取消");
         }, this);
     },
 
-    // nextRoundClear: function () {
-    //     if (WinBoolean) {
-    //         var Spawns = cc.find("/Canvas/Alphabet");
-    //         LevelManager.destroyNode(Spawns.children);
-    //         var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
-    //         LevelManager.destroyNode(SpawnsDis.children);
-    //         GameScore += 1; // 关卡更新
-    //         LevelManager.enterAfterGameScene();
-    //         this.init();
-    //         BoardCreator.onLoad();
-    //         WinBoolean = false;
-    //     }
-    // },
+    displayWordTouched: function (alphaTouched) {
+        var wordTouched = "";
+        for (var i = 0; i < alphaTouched.length; i++) {
+            wordTouched += alphaTouched[i].name[0]
+        }
+        this.WordTouchedLabel.string = (wordTouched.toUpperCase()).toString();
+    },
 
     objectState: function (Object, Array) {
         for (var i = 0; i < Array.length; i++) {

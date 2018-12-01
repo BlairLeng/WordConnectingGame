@@ -41,7 +41,7 @@ cc.Class({
                 var userItem = cc.instantiate(this.DictionaryItemPrefab);
                 userItem.setScale(1, 1);
                 userItem.getComponent('DictionaryItem').init(i, word);
-                userItem.y = 220 - i * 50;
+                userItem.y = 180 - i * 50;
                 console.log(userItem)
                 // this.scrollViewContent.addChild(userItem);
                 this.node.addChild(userItem, 1, "1000");

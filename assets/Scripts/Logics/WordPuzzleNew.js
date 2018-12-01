@@ -7,54 +7,25 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+//import math;
+
+
 var Level = require("./LevelManager");
 var alphabetController = require("./AlphabetController");
+var Generate = require("../Framework/Controller/Generate");
 // var Board = require("./WordPuzzleNew");
 
 var LevelManager = new Level();
-// var AlphabetController = new alphabetController();
-// var BoardCreator = new Board();
 
-
-//var wordlist = ["pencil","pen"];//word list for testing purpose
 var address = new Object; // the dictionary that store each letter's index
 var rest = new Array(); // the array to store any words that CAN NOT be in the puzzle; we will place them addtionally
 var wordadd = new Object();
 var board; //board variable
 var BoardLen = 13;
 var BoardWid = 13;
-var wordAddress = new Array();
-//var GeneratedWrod = require("../word_generation.js");
-//var w = new GeneratedWrod();
-//var wordlist = w.onLoad();
-//var wordlist = ["pencil","pen"];
-//var wordlist = wordlist.slice(0,4);
-//console.log(wordlist);
-
 var wordcount = 0;
-// var commonValue = require("/Common.js");
-
 var wordforDisplay;
-//var commonValue = new cValue();
-
-//var b = require("/AlphabetController.js");
-//var bl = new b();
-//var bool = bl.testWordBool;
-// var wordlist = commonValue.rankWord[commonValue.GameScore];
-// // var wordlist = wordlist.slice(0,4);
-// console.log("这苏打粉",commonValue.rankWord[commonValue.GameScore]);
-//
-// commonValue.PresentedWords = commonValue.PresentedWords.concat(wordlist);
-
-// console.log("这一关所需要显示的单词为",commonValue.PresentedWords);
-
-//var wordlist = ["which","hi"];
-// var wordforDisplay = commonValue.touchedWord;
-//var wordlist = wordlist.slice(0,4);
-//var fromAl = require("AlphabetController.js");
-
-
-//console.log("display",wordforDisplay);
+var unpresentedword = new Array();
 
 cc.Class({
     extends: cc.Component,
@@ -68,7 +39,13 @@ cc.Class({
             type: cc.Prefab
         },
 
-        wordlist: []
+        wordlist: [],
+
+        Square1: cc.Prefab,
+        Square2: cc.Prefab,
+        Square3: cc.Prefab,
+
+        DisplayLayout: cc.Node,
 
 
     },
@@ -78,16 +55,79 @@ cc.Class({
     onLoad: function () {
         this.wordlist = rankWord;
         board = this.CreateBoard();
-        this.WordPuzzleMaker(board,this.wordlist.slice(0,4));
+
+        //this.wordlist = ["tribal","trial","trail"];
+
+        this.WordPuzzleMaker(board, this.wordlist.slice(0, 4));
         console.log(board);
-
-
+        console.log(wordadd, this.wordlist[0])
+        this.DisplaySquare(board, this.wordlist.slice(0, 4), wordadd);
         //this.DisplayW(board,wordforDisplay);
 
     },
 
+    DisplaySquare: function (board, wordlist, wordadd) {
+        var longestword = wordlist[0];
+        var len = longestword.length;
+        for (var a = 0; a < wordlist.length; a++) {
+            if (wordlist[a].length > longestword.length) {
+                longestword = wordlist[a]
+            }
+        }
 
-    WordPuzzleMaker: function (board,wordlist) {
+        var frequencyX = {};
+        var frequencyY = {};
+        var test2 = [];
+        var wordl = Object.keys(wordadd);
+        var wordp = Object.values(wordadd);
+
+        for (var i = 0; i < wordp.length; i++) {
+            for (var j = 0; j < wordp[i].length; j++) {
+                if (true) {
+                    test2.push(wordp[i][j])
+                }
+            }
+        }
+        for (var i = 0; i < test2.length; i++) {
+            frequencyX[test2[i][0]] = (frequencyX[test2[i][0]] || 0) + 1;
+            frequencyY[test2[i][1]] = (frequencyY[test2[i][1]] || 0) + 1;
+        }
+        // console.log(frequencyX,frequencyY);
+
+
+
+        var arrX = Object.keys(frequencyX);
+        var minX = Math.min(...arrX);
+        var maxX = Math.max(...arrX);
+
+        var arrY = Object.keys(frequencyY);
+        var minY = Math.min(...arrY);
+        var maxY = Math.max(...arrY);
+        var message = (maxX-minX) > (maxY-minY) ? (maxX-minX+1) : (maxY-minY+1);
+
+        // console.log(arrX,arrY,minX,minY,maxX,maxY,message);
+
+        var generate = new Generate([this.Square1, this.Square2, this.Square3], 1, 1, this.DisplayLayout);
+        generate.GenerateDisplay(message);
+
+
+        for (var i = 0; i < test2.length; i++) {
+
+            this.DisplayLayout.getChildByName(`${[test2[i][0]- minX,test2[i][1]-6]}`).opacity = 255;
+            console.log([test2[i][1]-6, test2[i][0]- minX]);
+        }
+        console.log(test2, this.DisplayLayout)
+
+
+        var word = wordl[0];
+        var letteradd = wordadd[word];
+        console.log("letter add ", wordl);
+        console.log("letter wordadd ", wordadd);
+        console.log("letter de ", letteradd[0][0]);
+    },
+
+
+    WordPuzzleMaker: function (board, wordlist) {
         //This function will go through each word in the list and place them onto the board one by one
 
         var word;//variable to keep track of each word in the wordlist
@@ -149,6 +189,7 @@ cc.Class({
         else {
             wordadd[word] = [[indx, indy]]; //otherwise, insert this char into the dictionary and record the index
         }
+
     },
 
 
@@ -186,17 +227,14 @@ cc.Class({
 
 
     PlaceWord: function (board, word, n) {
-        //this function will get the starting postion(index) for the word
-        //It will return [index i,index j, flag variable]
-        //The flag variable serves as a message to tell how to place the word (horizontal or vertical)
-        //If the flag variable is 0, then we will place the word horizontally;
-        //If the flag variable is 1, then we will place the word vertically;
+        // this function will get the starting postion(index) for the word
+        // It will return [index i,index j, flag variable]
+        // The flag variable serves as a message to tell how to place the word (horizontal or vertical)
+        // If the flag variable is 0, then we will place the word horizontally;
+        // If the flag variable is 1, then we will place the word vertically;
         var startpos;
 
         startpos = this.GetStartPosition(board, word);
-        //console.log(startpos);
-        //console.log("place this word",word);
-
 
         if (startpos[0] == -1) {
             rest = rest.concat([word]);
@@ -212,7 +250,7 @@ cc.Class({
         y = startpos[1];
         flag = startpos[2]
 
-        //console.log("this word startpos",startpos);
+        console.log("this word startpos", startpos);
 
         if (flag == 0)//place the word HORIZONTALLY
         {
@@ -226,10 +264,32 @@ cc.Class({
                                              //Because no matter how you place the letter into this block later
                                              //it will conflict with the current word
                     }
+
+                    if (board[x][y - 1] == 1) {
+                        board[x][y - 1] = 3; //the block that is left to the first letter will be assigned to 3
+                                             //Because no matter how you place the letter into this block later
+                                             //it will conflict with the current word
+                    }
+
+                    if (board[x][y - 1] == 2) {
+                        board[x][y - 1] = 3; //the block that is left to the first letter will be assigned to 3
+                                             //Because no matter how you place the letter into this block later
+                                             //it will conflict with the current word
+                    }
                 }
                 if (i == word.length - 1) //the last letter of the word
                 {
                     if (board[x][y + i + 1] == 0) {
+                        board[x][y + i + 1] = 3; //the block that is right to the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
+                    }
+                    if (board[x][y + i + 1] == 1) {
+                        board[x][y + i + 1] = 3; //the block that is right to the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
+                    }
+                    if (board[x][y + i + 1] == 2) {
                         board[x][y + i + 1] = 3; //the block that is right to the last letter will be assigned to 3
                                                  //Because no matter how you place the letter into this block later
                                                  //it will conflict with the current word
@@ -244,11 +304,17 @@ cc.Class({
                 else if (board[x - 1][y + i] == 1) {
                     board[x - 1][y + i] = 3;
                 }
+                else if (board[x - 1][y + i] == 2) {
+                    board[x - 1][y + i] = 3;
+                }
 
                 if (board[x + 1][y + i] == 0)//by placing the letter into the current block, we need to assign
                 {                     //the block below the current block to 2 which means "available for only placing horizontal"
                     board[x + 1][y + i] = 2;
 
+                }
+                else if (board[x + 1][y + i] == 1) {
+                    board[x + 1][y + i] = 3;
                 }
                 else if (board[x + 1][y + i] == 2) {
                     board[x + 1][y + i] = 3;
@@ -261,11 +327,23 @@ cc.Class({
         }
         else if (flag == 1)//place the word VERTICALLY
         {
+            console.log("长度", word.length);
             var j;//for loop index variable
             for (j = 0; j < word.length; j++) {
+                console.log("字母", word[j]);
                 if (j == 0) //the first letter of the word
                 {
                     if (board[x - 1][y] == 0) {
+                        board[x - 1][y] = 3;  //the block that is above the first letter will be assigned to 3
+                                              //Because no matter how you place the letter into this block later
+                                              //it will conflict with the current word
+                    }
+                    else if (board[x - 1][y] == 1) {
+                        board[x - 1][y] = 3;  //the block that is above the first letter will be assigned to 3
+                                              //Because no matter how you place the letter into this block later
+                                              //it will conflict with the current word
+                    }
+                    else if (board[x - 1][y] == 2) {
                         board[x - 1][y] = 3;  //the block that is above the first letter will be assigned to 3
                                               //Because no matter how you place the letter into this block later
                                               //it will conflict with the current word
@@ -279,6 +357,18 @@ cc.Class({
                                                  //it will conflict with the current word
 
                     }
+                    else if (board[x + j + 1][y] == 1) {
+                        board[x + j + 1][y] = 3; //the block that is below the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
+
+                    }
+                    else if (board[x + j + 1][y] == 2) {
+                        board[x + j + 1][y] = 3; //the block that is below the last letter will be assigned to 3
+                                                 //Because no matter how you place the letter into this block later
+                                                 //it will conflict with the current word
+
+                    }
                 }
                 if (board[x + j][y - 1] == 0) {
                     board[x + j][y - 1] = 1;
@@ -286,12 +376,18 @@ cc.Class({
                 else if (board[x + j][y - 1] == 2) {
                     board[x + j][y - 1] = 3;
                 }
+                else if (board[x + j][y - 1] == 1) {
+                    board[x + j][y - 1] = 3;
+                }
 
                 if (board[x + j][y + 1] == 0) {
-                    board[x + j][y - 1] = 1;
+                    board[x + j][y + 1] = 1;
                 }
-                else if (board[x + j][y + 1] == 0) {
-                    board[x + j][y - 1] = 3;
+                else if (board[x + j][y + 1] == 2) {
+                    board[x + j][y + 1] = 3;
+                }
+                else if (board[x + j][y + 1] == 1) {
+                    board[x + j][y + 1] = 3;
                 }
 
                 board[x + j][y] = word[j]; //place the letter onto the board
@@ -509,47 +605,120 @@ cc.Class({
 
     },
 
-    DisplayW: function (board, wordforDisplay) {
+    DisplayW: function (board, wordlist, wordforDisplay) {
+
+        var longestword = wordlist[0];
+
+
+        var len = longestword.length;
+        console.log("word len", longestword);
+        var a;
+        for (a = 0; a < wordlist.length; a++) {
+            if (wordlist[a].length > longestword.length) {
+                longestword = wordlist[a]
+            }
+
+        }
+
+        var centeri = 0
+        var centerj = 440
+
+        var rangei = 500
+        var rangej = 700
+
+        var uniti = rangei / len
+        var unitj = rangei / len
+        //var unitj = rangej/len
+
+        var starti = centeri - Math.floor(len / 2) * uniti;
+        var startj = centerj;
+
+
         var addr = wordadd[wordforDisplay];
         if (addr !== undefined) {
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
                 //console.log("letter", wordforDisplay[i]);
                 var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[wordforDisplay[i]]]);
-                NewPrefab.setScale(0.5, 0.5); // 大小
+                NewPrefab.setScale(1, 1); // 大小
                 NewPrefab.parent = this.AlphabetLayout;
                 NewPrefab.name = `${wordforDisplay[i]}`;
 
-                var indx = addr[i][0];
-                var indy = addr[i][1];
+                var indj = addr[i][0];
+                var indi = addr[i][1];
 
-                var l = 400;
-                var w = 250;
+                //var l = 500;
+                //var w = 700;
 
-                var lunit = l / 6;
-                var wunit = w / 6;
+                //var lunit = l / 6;
+                //var wunit = w / 6;
 
-                var startIndi = 0;
-                var startIndj = 200;
+                //var startIndi = -350;
+                //var startIndj = 420;
 
-                NewPrefab.setPosition(cc.v2(((indy - 6) * wunit), ((indx - 6) * lunit) + 200));
+                NewPrefab.setPosition(cc.v2((starti + (indi - 6) * uniti), (startj - (indj - 6) * unitj)));
             }
         }
         //commonValue.touchedWord = ""
+    },
+
+    DisplayHint: function (board, wordlist, wordadd) {
+
+        var longestword = wordlist[0];
+
+
+        var len = longestword.length;
+        console.log("word len", longestword);
+        var a;
+        for (a = 0; a < wordlist.length; a++) {
+            if (wordlist[a].length > longestword.length) {
+                longestword = wordlist[a]
+            }
+
+        }
+
+        var centeri = 0
+        var centerj = 440
+
+        var rangei = 500
+        var rangej = 700
+
+        var uniti = rangei / len
+        var unitj = rangei / len
+        //var unitj = rangej/len
+
+        var starti = centeri - Math.floor(len / 2) * uniti;
+        var startj = centerj;
+
+        var word = wordadd.keys[0];
+        var addr = wordadd[word];
+
+        var addrlen = addr.length;
+
+        var letter = Math.floor(Math.random() * addrlen);
+
+        var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[word[letter]]]);
+
+        var indj = addr[letter][0];
+        var indi = addr[letter][1];
+
+        NewPrefab.setPosition(cc.v2((starti + (indi - 6) * uniti), (startj - (indj - 6) * unitj)))
     },
 
 
     update(dt) {
         // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
         if (touchedWord !== "") {
-            this.DisplayW(board, touchedWord);
+            this.DisplayW(board, this.wordlist.slice(0, 4), touchedWord);
+            delete wordadd[touchedWord];
             touchedWord = "";
         }
-        if(wordcount == 2){
+        if (wordcount > 4
+            | wordcount > this.wordlist.length) {
             window.WinBoolean = true;
             var Spawns = cc.find("/Canvas/Alphabet");
             LevelManager.destroyNode(Spawns.children);
-            var SpawnsDis= cc.find("/Canvas/DisplayAlphabet");
+            var SpawnsDis = cc.find("/Canvas/DisplayAlphabet");
             LevelManager.destroyNode(SpawnsDis.children);
             window.allWordFound = [];
             window.GameScore += 1; // 关卡更新
@@ -562,6 +731,10 @@ cc.Class({
             wordcount = 0;
 
         }
+        // if(window.hinttouched == true)
+        // {
+        //     this.DisplayHint(board,this.wordlist.slice(0,4),wordadd);
+        // }
     },
 
 });
