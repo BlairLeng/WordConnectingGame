@@ -117,12 +117,12 @@ module.exports = cc.Class({
 
     onLoad: function () {
 
-    	this.temp = this.generated();
+    	var temp = this.generated();
 
-        while (this.temp.length <= 2) {
-        	this.temp = this.generated();
+        while (temp.length <= 2) {
+        	temp = this.generated();
         }
-        window.rankWord = this.temp;
+        window.rankWord = temp;
         console.log("lol", window.rankWord)
 
     },

@@ -11,7 +11,7 @@
 
 
 var Level = require("./LevelManager");
-var alphabetController = require("./AlphabetController");
+// var alphabetController = require("./AlphabetController");
 var Generate = require("../Framework/Controller/Generate");
 // var Board = require("./WordPuzzleNew");
 
@@ -56,14 +56,10 @@ cc.Class({
         this.wordlist = rankWord;
         board = this.CreateBoard();
 
-        //this.wordlist = ["tribal","trial","trail"];
-
         this.WordPuzzleMaker(board, this.wordlist.slice(0, 4));
         console.log(board);
         console.log(wordadd, this.wordlist[0])
         this.DisplaySquare(board, this.wordlist.slice(0, 4), wordadd);
-        //this.DisplayW(board,wordforDisplay);
-
     },
 
     DisplaySquare: function (board, wordlist, wordadd) {
@@ -83,9 +79,7 @@ cc.Class({
 
         for (var i = 0; i < wordp.length; i++) {
             for (var j = 0; j < wordp[i].length; j++) {
-                if (true) {
-                    test2.push(wordp[i][j])
-                }
+                test2.push(wordp[i][j])
             }
         }
         for (var i = 0; i < test2.length; i++) {
@@ -97,6 +91,7 @@ cc.Class({
         var arrX = Object.keys(frequencyX);
         var minX = Math.min(...arrX);
         var maxX = Math.max(...arrX);
+        this.mina = minX
 
         var arrY = Object.keys(frequencyY);
         var minY = Math.min(...arrY);
@@ -108,10 +103,10 @@ cc.Class({
         var generate = new Generate([this.Square1, this.Square2, this.Square3], 1, 1, this.DisplayLayout);
         generate.GenerateDisplay(message);
 
-        var a = maxX - minX + 1 < message && (maxX - Math.round((maxX - minX + 1) / 2)) <= message ? Math.round((maxX - minX + 1) / 2) : minX;
+        var a = maxX - minX + 1 < message && ((maxX - Math.round((maxX - minX + 1) / 2))+1) <= message ? Math.round((maxX - minX + 1) / 2) : minX;
         var b = maxY - 6 + 1 <= message ? (maxY + 1 - message) : 6;
         for (var i = 0; i < test2.length; i++) {
-            this.DisplayLayout.getChildByName(`${[test2[i][0]- a,test2[i][1]-b]}`).opacity = 100;
+            this.DisplayLayout.getChildByName(`${[test2[i][0]- minX,test2[i][1]-6]}`).opacity = 255;
             //console.log([test2[i][0]- a,test2[i][1]-6]);
         }
         // console.log(test2, this.DisplayLayout)
@@ -605,56 +600,22 @@ cc.Class({
 
     DisplayW: function (board, wordlist, wordforDisplay) {
 
-        var longestword = wordlist[0];
-
-
-        var len = longestword.length;
-        console.log("word len", longestword);
-        var a;
-        for (a = 0; a < wordlist.length; a++) {
-            if (wordlist[a].length > longestword.length) {
-                longestword = wordlist[a]
-            }
-
-        }
-
-        var centeri = 0
-        var centerj = 440
-
-        var rangei = 500
-        var rangej = 700
-
-        var uniti = rangei / len
-        var unitj = rangei / len
-        //var unitj = rangej/len
-
-        var starti = centeri - Math.floor(len / 2) * uniti;
-        var startj = centerj;
-
-
         var addr = wordadd[wordforDisplay];
+        // console.log("addr",addr)
         if (addr !== undefined) {
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
-                //console.log("letter", wordforDisplay[i]);
+                console.log("letter", wordforDisplay[i]);
                 var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[wordforDisplay[i]]]);
-                NewPrefab.setScale(1, 1); // 大小
                 NewPrefab.parent = this.AlphabetLayout;
                 NewPrefab.name = `${wordforDisplay[i]}`;
+                var Position = this.DisplayLayout.getChildByName(`${[addr[i][0]- this.mina,addr[i][1]-6]}`).position;
+                var finalPosition =this.DisplayLayout.convertToWorldSpaceAR(Position)
+                var Scale = this.DisplayLayout.getChildByName(`${[addr[i][0]- this.mina,addr[i][1]-6]}`).getScale()
+                NewPrefab.setScale(Scale); // 大小
+                // console.log(this.AlphabetLayout.convertToNodeSpaceAR(finalPosition))
 
-                var indj = addr[i][0];
-                var indi = addr[i][1];
-
-                //var l = 500;
-                //var w = 700;
-
-                //var lunit = l / 6;
-                //var wunit = w / 6;
-
-                //var startIndi = -350;
-                //var startIndj = 420;
-
-                NewPrefab.setPosition(cc.v2((starti + (indi - 6) * uniti), (startj - (indj - 6) * unitj)));
+                NewPrefab.setPosition(cc.v2(this.AlphabetLayout.convertToNodeSpaceAR(finalPosition)));
             }
         }
         //commonValue.touchedWord = ""
@@ -711,8 +672,9 @@ cc.Class({
             delete wordadd[touchedWord];
             touchedWord = "";
         }
-        if (wordcount > 4
-            | wordcount > this.wordlist.length) {
+        console.log("fdsafa",wordcount,this.wordlist)
+        if (wordcount >= 4
+            || wordcount >= this.wordlist.length) {
             window.WinBoolean = true;
             var Spawns = cc.find("/Canvas/Alphabet");
             LevelManager.destroyNode(Spawns.children);
@@ -729,6 +691,8 @@ cc.Class({
             wordcount = 0;
 
         }
+
+
         // if(window.hinttouched == true)
         // {
         //     this.DisplayHint(board,this.wordlist.slice(0,4),wordadd);

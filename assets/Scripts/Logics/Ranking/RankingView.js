@@ -8,7 +8,14 @@ cc.Class({
         rankingScrollView: cc.Sprite,//显示排行榜
     },
     onLoad() {
+        // this.exitGame= cc.find("Canvas/RankingView/Exit");
+        // this.exitGame.on(cc.Node.EventType.TOUCH_START, () => this.exitClick(), this.exitGame)
     },
+
+    exitClick: function () {
+        cc.director.loadScene("InitScene")
+    },
+
     start() {
         if (CC_WECHATGAME) {
             window.wx.showShareMenu({withShareTicket: true});//设置分享按钮，方便获取群id展示群排行榜

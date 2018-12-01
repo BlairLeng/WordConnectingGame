@@ -23,6 +23,7 @@ cc.Class({
     onLoad: function () {
         this.back.on(cc.Node.EventType.TOUCH_START, () => this.backClick(), this.back)
         this.exitGame.on(cc.Node.EventType.TOUCH_START, () => this.exitClick(), this.exitGame)
+        this.shareGame.on(cc.Node.EventType.TOUCH_START, () => this.shareClick(), this.shareGame)
     },
 
     backClick: function () {
