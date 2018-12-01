@@ -743,7 +743,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "vibrationOn",
+    "_name": "ShareFriend",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -885,8 +885,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "震动",
-    "_N$string": "震动",
+    "_string": "分享好友",
+    "_N$string": "分享好友",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -920,9 +920,7 @@
     "_enabled": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "fd03b5aa-57ff-455b-9e5b-46b1fd3ba134"
-    },
+    "_spriteFrame": null,
     "_type": 1,
     "_sizeMode": 0,
     "_fillType": 0,
@@ -980,9 +978,7 @@
       "b": 255,
       "a": 255
     },
-    "_N$normalSprite": {
-      "__uuid__": "fd03b5aa-57ff-455b-9e5b-46b1fd3ba134"
-    },
+    "_N$normalSprite": null,
     "_N$pressedSprite": {
       "__uuid__": "e9ec654c-97a2-4787-9325-e6a10375219a"
     },
@@ -1016,7 +1012,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "vibrationOff",
+    "_name": "exitGame",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -1158,8 +1154,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "震动",
-    "_N$string": "震动",
+    "_string": "退出游戏",
+    "_N$string": "退出游戏",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -1193,9 +1189,7 @@
     "_enabled": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "534f2f9d-0d93-4232-bd18-5d721df78375"
-    },
+    "_spriteFrame": null,
     "_type": 1,
     "_sizeMode": 0,
     "_fillType": 0,
@@ -1253,9 +1247,7 @@
       "b": 255,
       "a": 255
     },
-    "_N$normalSprite": {
-      "__uuid__": "534f2f9d-0d93-4232-bd18-5d721df78375"
-    },
+    "_N$normalSprite": null,
     "_N$pressedSprite": {
       "__uuid__": "e9ec654c-97a2-4787-9325-e6a10375219a"
     },
@@ -1633,6 +1625,9 @@
     },
     "back": {
       "__id__": 33
+    },
+    "exitGame": {
+      "__id__": 26
     },
     "_id": ""
   },

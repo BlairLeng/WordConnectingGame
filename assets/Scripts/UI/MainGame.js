@@ -8,6 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var controller = require("../Framework/Controller/Generate");
+var Display = require("../WordPuzzleNew")
+
 
 cc.Class({
     extends: cc.Component,
@@ -39,18 +41,24 @@ cc.Class({
         this.coinLabel.string = (window.GameCoin).toString();
         // cc.game.addPersistRootNode(this.Node);
         this.setting.on(cc.Node.EventType.TOUCH_START, () => this.settingClick(), this.setting);
-        this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint);
+        // this.hint.on(cc.Node.EventType.TOUCH_START, () => this.hintClick(), this.hint);
         this.dictionary.on(cc.Node.EventType.TOUCH_START, () => this.dictionaryClick(), this.dictionary);
     },
 
     settingClick: function () {
-        this.Canvas = cc.find("Canvas");
+        // this.Canvas = cc.find("Canvas");
         var settingGen = new controller(this.SettingPanel, 1, "", this.Canvas);
         settingGen.GeneratePics();
+
     },
 
     hintClick: function () {
         window.GameCoin -= 10;
+
+
+        var DisplayNew = new Display ();
+        DisplayNew.DisplayHint();
+
         this.coinLabel.string = (window.GameCoin).toString();
     },
 
