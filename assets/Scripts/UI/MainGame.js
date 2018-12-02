@@ -10,13 +10,12 @@
 var controller = require("../Framework/Controller/Generate");
 
 
-
 cc.Class({
     extends: cc.Component,
 
     properties: {
         setting: cc.Node,
-        hint: cc.Node,
+        // hint: cc.Node,
         dictionary: cc.Node,
         Canvas: cc.Node,
         rankLabel: cc.Label,
@@ -52,11 +51,10 @@ cc.Class({
 
     },
 
-    hintClick: function () {
-        window.GameCoin -= 10;
-
-        this.coinLabel.string = (window.GameCoin).toString();
-    },
+    // hintClick: function () {
+    //     window.GameCoin -= 10;
+    //     this.coinLabel.string = (window.GameCoin).toString();
+    // },
 
     dictionaryClick: function () {
         this.Canvas = cc.find("Canvas");
