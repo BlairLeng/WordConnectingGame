@@ -53,6 +53,9 @@ cc.Class({
 //example for testing
 
     onLoad: function () {
+        wordadd = [];
+        rest = [];
+        address = [];
         this.wordlist = rankWord;
         //this.wordlist = ["space","case","sea","as"];
 
@@ -63,6 +66,7 @@ cc.Class({
         console.log(board);
         console.log(wordadd, this.wordlist[0])
         this.DisplaySquare(board, this.wordlist.slice(0, 4), wordadd);
+        console.log("这是每一关的wordadd",wordadd);
     },
 
     DisplaySquare: function (board, wordlist, wordadd) {
@@ -682,7 +686,7 @@ cc.Class({
         var addr = wordadd[wordforDisplay];
         // console.log("addr",addr)
         if (addr !== undefined) {
-            displayedWord = displayedWord + [wordforDisplay];
+            
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
                 addr[i][2] = 1;
@@ -747,7 +751,7 @@ cc.Class({
             delete wordadd[touchedWord];
             touchedWord = "";
         }
-        console.log("fdsafa",wordcount,this.wordlist)
+        //console.log("fdsafa",wordcount,this.wordlist)
         if (wordcount >= 4
             || wordcount >= this.wordlist.length) {
             window.WinBoolean = true;
@@ -760,9 +764,7 @@ cc.Class({
             LevelManager.enterAfterGameScene();
 
             Spawns.getComponent('AlphabetController').init();
-            wordadd = [];
-            address = [];
-            rest = [];
+           
 
 
             this.onLoad();
