@@ -24,6 +24,8 @@ var board; //board variable
 var BoardLen = 13;
 var BoardWid = 13;
 var wordcount = 0;
+var lettercount = 0;
+var totalletter = 0;
 var wordforDisplay;
 var unpresentedword = new Array();
 
@@ -56,6 +58,12 @@ cc.Class({
         wordadd = [];
         rest = [];
         address = [];
+        totalletter = 0;
+        lettercount = 0;
+        wordcount = 0;
+        this.wordlist = [];
+
+
         this.wordlist = rankWord;
         //this.wordlist = ["space","case","sea","as"];
 
@@ -135,6 +143,17 @@ cc.Class({
         //This function will go through each word in the list and place them onto the board one by one
 
         var word;//variable to keep track of each word in the wordlist
+
+        var a;
+        for(a = 0; a<wordlist.length;a++)
+        {
+            var b;
+            for(b = 0;b<wordlist[a].length;b++)
+            {
+                totalletter = totalletter + 1;
+            }
+        }
+        console.log("这一关的total letter",totalletter);
 
 
         var i;//index variable
@@ -686,7 +705,38 @@ cc.Class({
 
     },
 
-    DisplayW: function (board, wordlist, wordforDisplay) {
+    AvoidRep: function(board,x,y,wordadd){
+        //console.log("在avoid");
+        //console.log(i);
+        //console.log(j);
+        var key = Object.keys(wordadd);
+
+        var i;
+        for(i = 0; i<key.length;i++)
+        {
+            var word = key[i];
+            var addr = wordadd[word];
+
+            var j;
+            for(j = 0;j<addr.length;j++)
+            {
+                var indi = addr[j][0];
+                var indj = addr[j][1];
+
+                if((indi == x)&&(indj == y))
+                {
+                    wordadd[word][j][2] = 1;
+                    lettercount = lettercount + 1;
+                    //console.log("rep",wordadd[word]);
+                }
+            }
+
+        }
+
+
+    },
+
+    DisplayW: function (board, wordadd,wordlist, wordforDisplay) {
 
         var addr = wordadd[wordforDisplay];
         // console.log("addr",addr)
@@ -694,7 +744,9 @@ cc.Class({
             
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
-                addr[i][2] = 1;
+                //lettercount = lettercount + 1;
+                wordadd[wordforDisplay][i][2] = 1;
+                this.AvoidRep(board,addr[i][0],addr[i][1],wordadd);
                 console.log("letter", wordforDisplay[i]);
                 var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[wordforDisplay[i]]]);
                 NewPrefab.parent = this.AlphabetLayout;
@@ -717,23 +769,29 @@ cc.Class({
         for(var i = 0;i<wordl.length;i++) {
             var word = wordl[i];
             var addr = wordadd[word];
-            console.log("测试",wordl,addr);
-            console.log()
+            //console.log("测试",wordl,addr);
+            //console.log()
             for(var j = 0;j<addr.length;j++) {
 
                 if(addr[j][2]==0) {
+                    //console.log("这次的hint",letter);
                     var letter = word[j]
                     var posi = addr[j][0]
                     var posj = addr[j][1]
+                    //console.log("这次的hint",letter);
 
                     var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[letter]]);
                     NewPrefab.parent = this.AlphabetLayout;
                     var Position = this.DisplayLayout.getChildByName(`${[posi- this.mina,posj-6]}`).position;
                     var finalPosition =this.DisplayLayout.convertToWorldSpaceAR(Position)
                     // console.log(addr)
-                    var Scale = this.DisplayLayout.getChildByName(`${[addr[i][0]- this.mina,addr[i][1]-6]}`).getScale()
+                    var Scale = this.DisplayLayout.getChildByName(`${[posi- this.mina,posj-6]}`).getScale()
                     NewPrefab.setScale(Scale);
                     NewPrefab.setPosition(cc.v2(this.AlphabetLayout.convertToNodeSpaceAR(finalPosition)));
+                    wordadd[word][j][2] = 1
+                    //lettercount = lettercount + 1;
+                    this.AvoidRep(board,posi,posj,wordadd);
+                    return;
                 }
             }
         }
@@ -747,14 +805,15 @@ cc.Class({
 
     update(dt) {
         // console.log("这个是从commonvalue里过来的touched word", commonValue.touchedWord);
+        //console.log("现在的letter count",lettercount);
         if (touchedWord !== "") {
-            this.DisplayW(board, this.wordlist.slice(0, 4), touchedWord);
+            this.DisplayW(board, wordadd,this.wordlist.slice(0, 4), touchedWord);
             delete wordadd[touchedWord];
             touchedWord = "";
         }
         //console.log("fdsafa",wordcount,this.wordlist)
         if (wordcount >= 4
-            || wordcount >= this.wordlist.length) {
+            || wordcount >= this.wordlist.length || lettercount == totalletter) {
             window.WinBoolean = true;
             var Spawns = cc.find("/Canvas/Alphabet");
             LevelManager.destroyNode(Spawns.children);
