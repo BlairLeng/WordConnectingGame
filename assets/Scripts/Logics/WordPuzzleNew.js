@@ -67,6 +67,10 @@ cc.Class({
         console.log(wordadd, this.wordlist[0])
         this.DisplaySquare(board, this.wordlist.slice(0, 4), wordadd);
         console.log("这是每一关的wordadd",wordadd);
+
+        this.hint= cc.find("Canvas/Button/button_hint");
+        console.log(this.hint)
+        this.hint.on(cc.Node.EventType.TOUCH_END, () => this.hintClick(), this.hint);
     },
 
     DisplaySquare: function (board, wordlist, wordadd) {
@@ -192,6 +196,7 @@ cc.Class({
         else {
             wordadd[word] = [[indx, indy,0]]; //otherwise, insert this char into the dictionary and record the index
         }
+        window.wordadd = wordadd;
 
     },
 
@@ -706,22 +711,17 @@ cc.Class({
         //commonValue.touchedWord = ""
     },
 
-    DisplayHint: function (board, displayedWord, wordadd) {
-
-
+    DisplayHint: function (board, displayedWord, wordadd, alpabetPrefab) {
         var wordl = Object.keys(wordadd);
-        var i;
-        for(i = 0;i<wordl.length;i++)
-        {
+
+        for(var i = 0;i<wordl.length;i++) {
             var word = wordl[i];
-
             var addr = wordadd[word];
+            console.log("测试",wordl,addr);
+            console.log()
+            for(var j = 0;j<addr.length;j++) {
 
-            var j;
-            for(j = 0;j<addr.length;j++)
-            {
-                if(addr[j][2]==0)
-                {
+                if(addr[j][2]==0) {
                     var letter = word[j]
                     var posi = addr[j][0]
                     var posj = addr[j][1]
@@ -730,17 +730,18 @@ cc.Class({
                     NewPrefab.parent = this.AlphabetLayout;
                     var Position = this.DisplayLayout.getChildByName(`${[posi- this.mina,posj-6]}`).position;
                     var finalPosition =this.DisplayLayout.convertToWorldSpaceAR(Position)
+                    // console.log(addr)
                     var Scale = this.DisplayLayout.getChildByName(`${[addr[i][0]- this.mina,addr[i][1]-6]}`).getScale()
                     NewPrefab.setScale(Scale);
                     NewPrefab.setPosition(cc.v2(this.AlphabetLayout.convertToNodeSpaceAR(finalPosition)));
-
-
-
-
                 }
             }
         }
 
+    },
+    
+    hintClick: function () {
+        this.DisplayHint(board,this.wordlist.slice(0,4),wordadd);
     },
 
 
@@ -765,8 +766,6 @@ cc.Class({
 
             Spawns.getComponent('AlphabetController').init();
            
-
-
             this.onLoad();
             window.WinBoolean = false;
             wordcount = 0;

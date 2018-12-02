@@ -39,8 +39,8 @@ cc.Class({
         //主动拉起分享接口
         cc.loader.loadRes("texture/share",function(err,data){
             wx.shareAppMessage({
-                title: "不怕，就来PK！",
-                imageUrl: data.url,
+                title: "你的词汇量只有幼儿园水平！",
+                imageUrl: canvas.toTempFilePathSync,
                 success(res){
                     console.log("转发成功!!!");
                     window.GameCoin += 20;

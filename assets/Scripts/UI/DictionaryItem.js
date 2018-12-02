@@ -31,8 +31,12 @@ cc.Class({
         //     this.numberLabel.node.color = new cc.Color(100, 255, 0, 255);
         //     this.numberLabel.node.setScale(1.3);
         // }
+        this.wordLabel.node.color = new cc.Color(0, 0, 0, 255);
+        this.chineseLabel.node.color = new cc.Color(0, 0, 0, 255);
+        this.numberLabel.node.color = new cc.Color(0, 0, 0, 255);
+
         this.numberLabel.string = (rank + 1).toString();
-        this.wordLabel.string = data.toString();
+        this.wordLabel.string = data.toString() + " :";
         this.chineseLabel.string = chinese.toString();
     },
 
