@@ -53,13 +53,20 @@ cc.Class({
 //example for testing
 
     onLoad: function () {
+        wordadd = [];
+        rest = [];
+        address = [];
         this.wordlist = rankWord;
+        //this.wordlist = ["space","case","sea","as"];
+
+
         board = this.CreateBoard();
 
         this.WordPuzzleMaker(board, this.wordlist.slice(0, 4));
         console.log(board);
         console.log(wordadd, this.wordlist[0])
         this.DisplaySquare(board, this.wordlist.slice(0, 4), wordadd);
+        console.log("这是每一关的wordadd",wordadd);
     },
 
     DisplaySquare: function (board, wordlist, wordadd) {
@@ -135,8 +142,9 @@ cc.Class({
 
         var j;//for loop index variable
         for (j = 0; j < rest.length; j++) //if there are any words left in the rest array which means those words CAN NOT be part of the puzzle
-        {                          //then put them onto any random empty spaces
-            this.PlaceRest(board, rest[j]);
+        { 
+            console.log("call rest");                     //then put them onto any random empty spaces
+            this.PlaceRest(board, rest[j],wordlist);
         }
 
     },
@@ -145,6 +153,8 @@ cc.Class({
         //This function insert the index for each letter that has been placed on the 2D board 
         //into the Address dictionary that we will return in the end
         //INPUT: each char,index i, index j
+
+    
 
         if (letter in address) {
             var i;//for loop index variable
@@ -177,10 +187,10 @@ cc.Class({
                 }
             }
             */
-            wordadd[word] = wordadd[word].concat([[indx, indy]]); //add the index into the existing list
+            wordadd[word] = wordadd[word].concat([[indx, indy,0]]); //add the index into the existing list
         }
         else {
-            wordadd[word] = [[indx, indy]]; //otherwise, insert this char into the dictionary and record the index
+            wordadd[word] = [[indx, indy,0]]; //otherwise, insert this char into the dictionary and record the index
         }
 
     },
@@ -230,7 +240,10 @@ cc.Class({
         startpos = this.GetStartPosition(board, word);
 
         if (startpos[0] == -1) {
+            console.log("word是啥",word);
+            console.log("进rest");
             rest = rest.concat([word]);
+            console.log("rest",rest);
 
             return board;
         }
@@ -583,18 +596,88 @@ cc.Class({
         return true;
     },
 
-    PlaceRest: function (board, word) {
+    PlaceRest: function (board, word,wordlist) {
         //this function will place the words that CAN NOT be in the puzzle
-        var starti;
-        var startj;
+        
 
-        starti = 0;
-        startj = 0;
+        var lenr = BoardLen;
+        var lenc = BoardWid;
+        var wordlen = word.length;
+
+        var starti = 0;
+        var startj = 0;
+
+        for(var r =0;r<BoardLen;r++)
+        {
+            for(var c = 0;c<BoardWid;c++)
+            {
+                var em = board[r][c];
+                if(em==3)
+                {
+                    starti = r;
+                    startj = c;
+                    break;
+
+                }
+
+
+            }
+            if(starti!=0)
+            {
+                break;
+            }
+        }
 
         var i;
-        for (i = 0; i < word.length; i++) {
-            board[starti][startj + i] = word[i];
+        for(i = starti; i < lenr; i++)
+        {
+            var j;
+
+            for(j = startj; j < lenc; j++)
+            {
+                var ele = board[i][j]
+
+                console.log("在哪里",i,j);
+                
+                if(ele==0)
+                {
+                    if(this.CheckAvlH(i,j,0,word.length-1,board))
+                    {
+                        console.log("check了哦")
+
+                        var a;
+                        for (a = 0; a < wordlen; a++) 
+                        {
+                            console.log("进for loop")
+                            board[i][j+a] = word[a]
+                            this.AddressInsert(word[a], i, j+a, wordlist.indexOf(word));
+
+                        }
+                        return;
+
+
+                    }
+                    else if(this.CheckAvlV(i,j,0,word.length-1,board))
+                    {
+                        var a;
+                        for (a = 0; i < wordlen; i++) 
+                        {
+                            board[i+a][j] = word[a]
+                            this.AddressInsert(word[a], i+a, j, wordlist.indexOf(word));
+
+                        }
+                        //this.AddressInsert(word[], x + j, y, n)
+                        return;
+
+                    }
+                }
+
+                
+
+            }
         }
+
+        
 
     },
 
@@ -603,8 +686,10 @@ cc.Class({
         var addr = wordadd[wordforDisplay];
         // console.log("addr",addr)
         if (addr !== undefined) {
+            
             wordcount = wordcount + 1;//在此处 把Wordcount加一，表明已有单词被玩家猜中
             for (var i = 0; i < wordforDisplay.length; i++) {
+                addr[i][2] = 1;
                 console.log("letter", wordforDisplay[i]);
                 var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[wordforDisplay[i]]]);
                 NewPrefab.parent = this.AlphabetLayout;
@@ -621,47 +706,41 @@ cc.Class({
         //commonValue.touchedWord = ""
     },
 
-    DisplayHint: function (board, wordlist, wordadd) {
-
-        var longestword = wordlist[0];
+    DisplayHint: function (board, displayedWord, wordadd) {
 
 
-        var len = longestword.length;
-        console.log("word len", longestword);
-        var a;
-        for (a = 0; a < wordlist.length; a++) {
-            if (wordlist[a].length > longestword.length) {
-                longestword = wordlist[a]
+        var wordl = Object.keys(wordadd);
+        var i;
+        for(i = 0;i<wordl.length;i++)
+        {
+            var word = wordl[i];
+
+            var addr = wordadd[word];
+
+            var j;
+            for(j = 0;j<addr.length;j++)
+            {
+                if(addr[j][2]==0)
+                {
+                    var letter = word[j]
+                    var posi = addr[j][0]
+                    var posj = addr[j][1]
+
+                    var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[letter]]);
+                    NewPrefab.parent = this.AlphabetLayout;
+                    var Position = this.DisplayLayout.getChildByName(`${[posi- this.mina,posj-6]}`).position;
+                    var finalPosition =this.DisplayLayout.convertToWorldSpaceAR(Position)
+                    var Scale = this.DisplayLayout.getChildByName(`${[addr[i][0]- this.mina,addr[i][1]-6]}`).getScale()
+                    NewPrefab.setScale(Scale);
+                    NewPrefab.setPosition(cc.v2(this.AlphabetLayout.convertToNodeSpaceAR(finalPosition)));
+
+
+
+
+                }
             }
-
         }
 
-        var centeri = 0
-        var centerj = 440
-
-        var rangei = 500
-        var rangej = 700
-
-        var uniti = rangei / len
-        var unitj = rangei / len
-        //var unitj = rangej/len
-
-        var starti = centeri - Math.floor(len / 2) * uniti;
-        var startj = centerj;
-
-        var word = wordadd.keys[0];
-        var addr = wordadd[word];
-
-        var addrlen = addr.length;
-
-        var letter = Math.floor(Math.random() * addrlen);
-
-        var NewPrefab = cc.instantiate(this.Alphabet[alphabetOrder[word[letter]]]);
-
-        var indj = addr[letter][0];
-        var indi = addr[letter][1];
-
-        NewPrefab.setPosition(cc.v2((starti + (indi - 6) * uniti), (startj - (indj - 6) * unitj)))
     },
 
 
@@ -672,7 +751,7 @@ cc.Class({
             delete wordadd[touchedWord];
             touchedWord = "";
         }
-        console.log("fdsafa",wordcount,this.wordlist)
+        //console.log("fdsafa",wordcount,this.wordlist)
         if (wordcount >= 4
             || wordcount >= this.wordlist.length) {
             window.WinBoolean = true;
@@ -685,6 +764,8 @@ cc.Class({
             LevelManager.enterAfterGameScene();
 
             Spawns.getComponent('AlphabetController').init();
+           
+
 
             this.onLoad();
             window.WinBoolean = false;
