@@ -799,7 +799,25 @@ cc.Class({
     },
     
     hintClick: function () {
-        this.DisplayHint(board,this.wordlist.slice(0,4),wordadd);
+        if (window.GameCoin >= 25) {
+            this.DisplayHint(board,this.wordlist.slice(0,4),wordadd);
+            window.GameCoin -= 25;
+        }
+        else {
+            console.log("fdsafsa")
+            var node = new cc.Node();
+            var label = node.addComponent(cc.Label);
+            label.node.setPosition(cc.v2(0,0))
+            label.fontSize = 50;
+            label.lineHeight = 50;
+            label.node.color = new cc.Color(0, 0, 0, 255);
+            label.string = "金币不够了";
+            node.parent = cc.find("Canvas")
+
+            label.scheduleOnce(function() {
+                node.destroy()
+            }, 1);
+        }
     },
 
 
@@ -815,6 +833,7 @@ cc.Class({
         if (wordcount >= 4
             || wordcount >= this.wordlist.length || lettercount == totalletter) {
             window.WinBoolean = true;
+
             var Spawns = cc.find("/Canvas/Alphabet");
             LevelManager.destroyNode(Spawns.children);
             var SpawnsDis = cc.find("/Canvas/DisplayAlphabet");
